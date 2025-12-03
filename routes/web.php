@@ -5,6 +5,7 @@ use App\Http\Controllers\BarbershopController;
 use App\Models\Barbershop;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -14,7 +15,7 @@ Route::get('/', function () {
 // Redirección inteligente después del login
 Route::get('/dashboard', function () {
     /** @var \App\Models\User $user */
-    $user = auth()->user();
+    $user = Auth::user();
     
     if ($user->isAdmin()) {
         return redirect()->route('admin.dashboard');
@@ -82,7 +83,7 @@ Route::middleware(['auth', 'verified', 'role:admin', 'admin.barbershop'])->prefi
 // Dashboard Barbero
 Route::middleware(['auth', 'verified', 'role:barber'])->prefix('barber')->name('barber.')->group(function () {
     Route::get('/dashboard', function () {
-        $barber = auth()->user();
+        $barber = Auth::user();
         $cutController = new \App\Http\Controllers\Barber\CutController();
         $stats = $cutController->getStats();
         

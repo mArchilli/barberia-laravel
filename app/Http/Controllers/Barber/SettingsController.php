@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Barber;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class SettingsController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
+        $user = Auth::user();
         
         return Inertia::render('Barber/Settings/Index', [
             'user' => $user,
@@ -20,7 +21,8 @@ class SettingsController extends Controller
 
     public function updateProfile(Request $request)
     {
-        $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
         
         $validated = $request->validate([
             'name' => 'required|string|max:255',

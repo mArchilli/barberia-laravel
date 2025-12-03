@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Cut;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class CutController extends Controller
 {
     public function index()
     {
-        $barber = auth()->user();
+        $barber = Auth::user();
         
         // Obtener cortes del barbero con relaciones
         $cuts = Cut::where('barber_id', $barber->id)
@@ -59,7 +60,7 @@ class CutController extends Controller
 
     public function create()
     {
-        $barber = auth()->user();
+        $barber = Auth::user();
         $barbershop = $barber->barbershop;
         
         // Obtener servicios activos de la barbería
@@ -76,7 +77,7 @@ class CutController extends Controller
 
     public function store(Request $request)
     {
-        $barber = auth()->user();
+        $barber = Auth::user();
         
         $validated = $request->validate([
             'service_id' => 'required|exists:services,id',
@@ -99,7 +100,7 @@ class CutController extends Controller
 
     public function getStats()
     {
-        $barber = auth()->user();
+        $barber = Auth::user();
         
         // Estadísticas para el dashboard
         $totalCuts = Cut::where('barber_id', $barber->id)->count();

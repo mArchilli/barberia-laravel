@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Barbershop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class BarberController extends Controller
@@ -24,7 +25,7 @@ class BarberController extends Controller
             ->get();
         
         // Obtener el admin (dueño) que también puede actuar como barbero
-        $admin = auth()->user();
+        $admin = Auth::user();
 
         return Inertia::render('Admin/Barbers/Index', [
             'barbershop' => $barbershop,
