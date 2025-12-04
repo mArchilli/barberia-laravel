@@ -249,8 +249,21 @@ export default function AuthenticatedLayout({ header, children }) {
                     sm:hidden bg-black/80 backdrop-blur-xl border-l border-white/5 shadow-2xl shadow-black/50 z-[70]
                 `}
             >
-                <div className="flex flex-col h-full overflow-y-auto py-4">
-                    <div className="space-y-1 px-2 flex-1">
+                <div className="flex flex-col h-full overflow-y-auto">
+                    {/* Header del menú con título y botón cerrar */}
+                    <div className="flex items-center justify-between px-4 py-4 border-b border-white/10">
+                        <h3 className="text-lg font-bold text-white uppercase tracking-wider">Menú</h3>
+                        <button
+                            onClick={() => setShowingNavigationDropdown(false)}
+                            className="text-white/60 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div className="space-y-1 px-2 pt-2 flex-1">
                         <ResponsiveNavLink
                             href={route('dashboard')}
                             active={route().current('dashboard')}
@@ -363,7 +376,7 @@ export default function AuthenticatedLayout({ header, children }) {
 
                     {/* Cambiar de barbería - solo admin */}
                     {user.role === 'admin' && barbershop && (
-                        <div className="border-t border-white/10 py-3 px-2">
+                        <div className="border-t border-white/10 px-2 pt-3">
                             <div className="mb-2">
                                 <div className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-2 px-3">
                                     Barbería Actual
@@ -394,20 +407,18 @@ export default function AuthenticatedLayout({ header, children }) {
                         </div>
                     )}
 
-                    <div className="pb-4 pt-4 px-2 mt-auto">
-                        <div className="space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')} className="text-white/80 hover:text-white transition-colors">
-                                Perfil
-                            </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                method="post"
-                                href={route('logout')}
-                                as="button"
-                                className="text-white/80 hover:text-white transition-colors"
-                            >
-                                Cerrar sesión
-                            </ResponsiveNavLink>
-                        </div>
+                    <div className="px-2 pb-4 mt-auto">
+                        <ResponsiveNavLink href={route('profile.edit')} className="text-white/80 hover:text-white transition-colors block">
+                            Perfil
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            method="post"
+                            href={route('logout')}
+                            as="button"
+                            className="text-white/80 hover:text-white transition-colors"
+                        >
+                            Cerrar sesión
+                        </ResponsiveNavLink>
                     </div>
                 </div>
             </div>

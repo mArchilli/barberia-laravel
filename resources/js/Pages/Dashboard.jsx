@@ -59,22 +59,13 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods }
 
             <div className="min-h-screen bg-black pt-6 pb-12">
                 <div className="mx-auto max-w-7xl px-6">
-                    {/* Bienvenida y botón */}
-                    <div className="flex justify-between items-center mb-6">
-                        <h3 className="text-3xl font-bold text-white">
-                            Bienvenido, {auth.user.name}
-                        </h3>
-                        <button
-                            onClick={() => setShowModal(true)}
-                            className="px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition flex items-center gap-2"
-                        >
-                            <span className="text-xl">➕</span>
-                            Registrar Corte
-                        </button>
-                    </div>
+                    {/* Bienvenida */}
+                    <h3 className="text-3xl font-bold text-white mb-6">
+                        Bienvenido, {auth.user.name}
+                    </h3>
 
                     {/* Card Principal - Caja de Hoy */}
-                    <div className="mb-8 rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-md p-8 shadow-2xl shadow-black/50">
+                    <div className="mb-3 rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-md p-8 shadow-2xl shadow-black/50">
                         <div className="mb-6">
                             <p className="text-white/60 text-sm uppercase tracking-wider mb-1">
                                 Saldo total: {dayName}
@@ -114,7 +105,7 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods }
                     </div>
 
                     {/* Cards de Cortes y Citas */}
-                    <div className="grid grid-cols-2 gap-6 mb-6">
+                    <div className="grid grid-cols-2 gap-3 mb-3">
                         {/* Servicios del día */}
                         <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
                             <p className="text-white/60 text-sm mb-3">Servicios del día</p>
@@ -153,6 +144,17 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods }
                             </Link>
                         </div>
                     </div>
+
+                    {/* Botón Registrar Corte */}
+                    <button
+                        onClick={() => setShowModal(true)}
+                        className="w-full mb-3 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-3">
+                    
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span className="text-xl font-bold text-white">Registrar Corte</span>
+                    </button>
 
                     {/* Rendimiento de Barberos */}
                     <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
