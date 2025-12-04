@@ -34,7 +34,8 @@ class CashRegisterController extends Controller
         }
         
         // Obtener todos los cortes del rango de fechas de la barbería
-        $cuts = Cut::whereBetween('service_date', [$startDate, $endDate])
+        $cuts = Cut::whereDate('service_date', '>=', $startDate)
+            ->whereDate('service_date', '<=', $endDate)
             ->whereHas('barber', function($query) use ($barbershopId) {
                 $query->where('barbershop_id', $barbershopId);
             })
