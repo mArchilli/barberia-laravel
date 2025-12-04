@@ -65,6 +65,7 @@ Route::middleware(['auth', 'verified', 'role:admin', 'admin.barbershop'])->prefi
             'barbershop' => $barbershop,
             'services' => $services,
             'paymentMethods' => $paymentMethods,
+            'accentColor' => $barbershop?->accent_color ?? '#ffffff',
         ]);
     })->name('dashboard');
     

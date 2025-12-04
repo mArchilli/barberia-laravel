@@ -10,13 +10,31 @@ use Inertia\Inertia;
 
 class CashRegisterController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $barbershopId = session('selected_barbershop_id');
         $barbershop = Barbershop::findOrFail($barbershopId);
         
-        // Obtener todos los cortes del día de la barbería
-        $cutsToday = Cut::whereDate('service_date', today())
+        // Determinar el rango de fechas según los parámetros
+        $startDate = null;
+        $endDate = null;
+        
+        if ($request->has('date')) {
+            // Día específico
+            $startDate = $request->date;
+            $endDate = $request->date;
+        } elseif ($request->has('start_date') && $request->has('end_date')) {
+            // Rango de fechas
+            $startDate = $request->start_date;
+            $endDate = $request->end_date;
+        } else {
+            // Por defecto: hoy
+            $startDate = today()->toDateString();
+            $endDate = today()->toDateString();
+        }
+        
+        // Obtener todos los cortes del rango de fechas de la barbería
+        $cuts = Cut::whereBetween('service_date', [$startDate, $endDate])
             ->whereHas('barber', function($query) use ($barbershopId) {
                 $query->where('barbershop_id', $barbershopId);
             })
@@ -24,14 +42,14 @@ class CashRegisterController extends Controller
             ->orderBy('service_date', 'desc')
             ->get();
 
-        // Total de cortes del día
-        $totalCuts = $cutsToday->count();
+        // Total de cortes
+        $totalCuts = $cuts->count();
         
-        // Total facturado del día
-        $totalRevenue = $cutsToday->sum('final_price');
+        // Total facturado
+        $totalRevenue = $cuts->sum('final_price');
         
         // Agrupar por método de pago
-        $revenueByPaymentMethod = $cutsToday->groupBy('payment_method_id')->map(function($cuts) {
+        $revenueByPaymentMethod = $cuts->groupBy('payment_method_id')->map(function($cuts) {
             return [
                 'payment_method' => $cuts->first()->paymentMethod ? $cuts->first()->paymentMethod->name : 'Sin especificar',
                 'total' => $cuts->sum('final_price'),
@@ -57,7 +75,7 @@ class CashRegisterController extends Controller
 
         return Inertia::render('Admin/CashRegister/Index', [
             'barbershop' => $barbershop,
-            'cuts' => $cutsToday,
+            'cuts' => $cuts,
             'stats' => [
                 'total_cuts' => $totalCuts,
                 'total_revenue' => $totalRevenue,
@@ -66,6 +84,11 @@ class CashRegisterController extends Controller
                 'transfer_total' => $transferTotal,
             ],
             'revenueByPaymentMethod' => $revenueByPaymentMethod,
+            'accentColor' => $barbershop->accent_color ?? '#ffffff',
+            'filters' => [
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+            ],
         ]);
     }
 }

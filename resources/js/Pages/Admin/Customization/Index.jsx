@@ -36,22 +36,20 @@ export default function CustomizationIndex({ auth, barbershop, accentColor }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="Personalización" />
 
-            <div className="min-h-screen bg-black pt-24 pb-12">
+            <div className="min-h-screen bg-black pt-2 pb-12">
                 <div className="mx-auto max-w-4xl px-6">
-                    <h1 className="text-3xl font-bold text-white mb-2">Personalización</h1>
+                    <h1 className="text-3xl font-bold text-white mb-2 mt-4">Personalización</h1>
                     <p className="text-white/60 mb-8">Personaliza los colores de acento de tu barbería</p>
 
                     <form onSubmit={handleSubmit}>
                         {/* Card principal */}
                         <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 mb-6">
-                            <h2 className="text-xl font-bold text-white mb-6">Color de Acento</h2>
-                            
                             {/* Preview en vivo */}
-                            <div className="mb-8 p-6 rounded-xl border border-white/10 bg-black/50">
+                            <div className="mb-8 p-6 rounded-xl border border-white/10 bg-black/50 overflow-hidden">
                                 <p className="text-white/60 text-sm mb-4">Vista previa</p>
-                                <div className="flex items-center gap-6">
+                                <div className="flex items-center justify-center gap-8">
                                     {/* Ejemplo SVG */}
-                                    <div>
+                                    <div className="flex-shrink-0 text-center">
                                         <p className="text-white/40 text-xs mb-2">Iconos</p>
                                         <svg 
                                             className="w-12 h-12" 
@@ -65,7 +63,7 @@ export default function CustomizationIndex({ auth, barbershop, accentColor }) {
                                     </div>
 
                                     {/* Ejemplo botón */}
-                                    <div>
+                                    <div className="flex-shrink-0 text-center">
                                         <p className="text-white/40 text-xs mb-2">Botones</p>
                                         <button 
                                             type="button"
@@ -80,10 +78,10 @@ export default function CustomizationIndex({ auth, barbershop, accentColor }) {
                                     </div>
 
                                     {/* Ejemplo acento */}
-                                    <div>
+                                    <div className="flex-shrink-0 text-center">
                                         <p className="text-white/40 text-xs mb-2">Detalles</p>
                                         <div 
-                                            className="w-20 h-20 rounded-full border-4"
+                                            className="w-8 h-8 rounded-full border-2 mx-auto"
                                             style={{ borderColor: previewColor }}
                                         />
                                     </div>
@@ -159,14 +157,14 @@ export default function CustomizationIndex({ auth, barbershop, accentColor }) {
                                         setPreviewColor(accentColor);
                                         setData('accent_color', accentColor);
                                     }}
-                                    className="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-medium transition-colors border border-white/10"
+                                    className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white text-sm font-medium transition-colors border border-white/10"
                                 >
                                     Resetear
                                 </button>
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="px-6 py-3 rounded-xl font-medium transition-all border-2 disabled:opacity-50"
+                                    className="px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 disabled:opacity-50"
                                     style={{
                                         backgroundColor: previewColor,
                                         borderColor: previewColor,

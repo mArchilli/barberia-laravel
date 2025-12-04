@@ -3,12 +3,9 @@ import { Head, Link } from '@inertiajs/react';
 import RegisterCutModal from '@/Components/RegisterCutModal';
 import { useState } from 'react';
 
-export default function Dashboard({ auth, barbershop, services, paymentMethods }) {
+export default function Dashboard({ auth, barbershop, services, paymentMethods, accentColor }) {
     const [showBalance, setShowBalance] = useState(true);
     const [showModal, setShowModal] = useState(false);
-    
-    // Color de acento personalizado
-    const accentColor = barbershop?.accent_color || '#ffffff';
     
     // Obtener fecha actual
     const today = new Date();
@@ -64,7 +61,7 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods }
                 <div className="mx-auto max-w-7xl px-6">
                     {/* Bienvenida */}
                     <h3 className="text-3xl font-bold text-white mb-6">
-                        Bienvenido, {auth.user.name}
+                        Bienvenido, <span style={{ color: accentColor }}>{auth.user.name}</span>
                     </h3>
 
                     {/* Card Principal - Caja de Hoy */}
@@ -84,7 +81,8 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods }
                             </h2>
                             <button
                                 onClick={() => setShowBalance(!showBalance)}
-                                className="text-white/60 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
+                                className="transition-colors p-2 hover:bg-white/10 rounded-lg"
+                                style={{ color: accentColor }}
                             >
                                 {showBalance ? (
                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -101,7 +99,11 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods }
 
                         <Link 
                             href={route('admin.cash-register.index')}
-                            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-colors border border-white/20"
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-medium transition-colors border-2"
+                            style={{
+                                borderColor: accentColor,
+                                backgroundColor: 'transparent'
+                            }}
                         >
                             Ver detalles de caja →
                         </Link>
@@ -179,7 +181,7 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods }
                                     <div className="flex flex-wrap gap-2">
                                         {barber.services.map((service, index) => (
                                             <div key={index} className="bg-white/5 px-3 py-1 rounded-lg border border-white/10">
-                                                <span className="text-white font-semibold text-xs">{service.count}</span>
+                                                <span className="font-semibold text-xs" style={{ color: accentColor }}>{service.count}</span>
                                                 <span className="text-white/50 ml-1 text-xs">{service.type}</span>
                                             </div>
                                         ))}

@@ -8,6 +8,7 @@ import { useState } from 'react';
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
     const barbershop = usePage().props.barbershop;
+    const accentColor = barbershop?.accent_color || '#ffffff';
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
@@ -191,18 +192,18 @@ export default function AuthenticatedLayout({ header, children }) {
 
                         <div className="-me-2 flex items-center sm:hidden">
                             <button
-                                onClick={() =>
-                                    setShowingNavigationDropdown(
-                                        (previousState) => !previousState,
-                                    )
-                                }
-                                className="inline-flex items-center justify-center rounded-md p-2 text-white/60 transition duration-150 ease-in-out hover:bg-white/10 hover:text-white focus:bg-white/10 focus:text-white focus:outline-none"
+                                onClick={() => setShowingNavigationDropdown(!showingNavigationDropdown)}
+                                className="sm:hidden inline-flex items-center justify-center p-2 rounded-md focus:outline-none"
+                                aria-controls="mobile-menu"
+                                aria-expanded={showingNavigationDropdown}
+                                style={{ color: accentColor }}
                             >
                                 <svg
                                     className="h-6 w-6"
                                     stroke="currentColor"
                                     fill="none"
                                     viewBox="0 0 24 24"
+                                    style={{ color: accentColor }}
                                 >
                                     <path
                                         className={
@@ -248,6 +249,7 @@ export default function AuthenticatedLayout({ header, children }) {
                     ${showingNavigationDropdown ? 'translate-x-0' : 'translate-x-full'}
                     sm:hidden bg-black/80 backdrop-blur-xl border-l border-white/5 shadow-2xl shadow-black/50 z-[70]
                 `}
+                style={{ borderLeft: `2px solid ${accentColor}` }}
             >
                 <div className="flex flex-col h-full overflow-y-auto">
                     {/* Header del menú con título y botón cerrar */}
@@ -255,7 +257,8 @@ export default function AuthenticatedLayout({ header, children }) {
                         <h3 className="text-lg font-bold text-white uppercase tracking-wider">Menú</h3>
                         <button
                             onClick={() => setShowingNavigationDropdown(false)}
-                            className="text-white/60 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
+                            className="transition-colors p-2 hover:bg-white/10 rounded-lg"
+                            style={{ color: accentColor }}
                         >
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
