@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
+    const barbershop = usePage().props.barbershop;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
@@ -16,8 +17,27 @@ export default function AuthenticatedLayout({ header, children }) {
             <nav className="border-b border-white/10 bg-black/50 backdrop-blur-md relative z-50">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
-                        <div className="flex">
-                            <div className="flex shrink-0 items-center">
+                        <div className="flex items-center gap-3">
+                            {/* Logo y nombre de barbería en móvil */}
+                            <div className="flex shrink-0 items-center gap-3 sm:hidden">
+                                {barbershop?.logo ? (
+                                    <img 
+                                        src={barbershop.logo.startsWith('http') ? barbershop.logo : `/storage/${barbershop.logo}`}
+                                        alt={barbershop?.name || 'Barbería'}
+                                        className="h-10 w-10 rounded-full object-cover border border-white/20"
+                                    />
+                                ) : (
+                                    <div className="h-10 w-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
+                                        <span className="text-white text-lg">💈</span>
+                                    </div>
+                                )}
+                                <span className="text-lg font-bold text-white tracking-wider">
+                                    {barbershop?.name || 'BARBERSHOP'}
+                                </span>
+                            </div>
+
+                            {/* Logo desktop */}
+                            <div className="hidden sm:flex shrink-0 items-center">
                                 <Link href="/" className="text-2xl font-bold text-white tracking-wider">
                                     BARBER<span className="text-white/70">SHOP</span>
                                 </Link>
@@ -73,6 +93,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                             className="text-white/80 hover:text-white"
                                         >
                                             Configuración
+                                        </NavLink>
+                                        <NavLink
+                                            href={route('barber.settings.index')}
+                                            className="text-white/80 hover:text-white"
+                                        >
+                                            Personalización
                                         </NavLink>
                                     </>
                                 )}
@@ -166,14 +192,26 @@ export default function AuthenticatedLayout({ header, children }) {
                         </div>
                     </div>
                 </div>
+            </nav>
 
-                <div
-                    className={
-                        (showingNavigationDropdown ? 'block' : 'hidden') +
-                        ' sm:hidden bg-black/95 backdrop-blur-md'
-                    }
-                >
-                    <div className="space-y-1 pb-3 pt-2">
+            {/* Overlay cuando el menú está abierto */}
+            {showingNavigationDropdown && (
+                <div 
+                    className="fixed inset-0 bg-black/50 backdrop-blur-sm sm:hidden z-[60]"
+                    onClick={() => setShowingNavigationDropdown(false)}
+                />
+            )}
+
+            {/* Menu hamburguesa móvil - slide desde derecha ocupando mitad de pantalla */}
+            <div 
+                className={`
+                    fixed top-0 bottom-0 right-0 w-1/2 transform transition-transform duration-300 ease-in-out
+                    ${showingNavigationDropdown ? 'translate-x-0' : 'translate-x-full'}
+                    sm:hidden bg-black border-l border-white/10 z-[70]
+                `}
+            >
+                <div className="flex flex-col h-full overflow-y-auto py-4">
+                    <div className="space-y-1 px-2 flex-1">
                         <ResponsiveNavLink
                             href={route('dashboard')}
                             active={route().current('dashboard')}
@@ -224,12 +262,58 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Configuración
                                 </ResponsiveNavLink>
+                                
+                                {/* Sección Personalización */}
+                                <div className="border-t border-white/10 pt-2 mt-2">
+                                    <div className="px-3 py-2 text-xs font-semibold text-white/40 uppercase tracking-wider">
+                                        Personalización
+                                    </div>
+                                    <ResponsiveNavLink
+                                        href={route('barber.settings.index')}
+                                        className="text-white/80 hover:text-white"
+                                    >
+                                        Mi Perfil
+                                    </ResponsiveNavLink>
+                                </div>
                             </>
                         )}
                     </div>
 
-                    <div className="border-t border-white/10 pb-1 pt-4">
-                        <div className="px-4">
+                    {/* Cambiar de barbería - solo admin */}
+                    {user.role === 'admin' && barbershop && (
+                        <div className="border-t border-white/10 py-3 px-2">
+                            <div className="mb-2">
+                                <div className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-2 px-3">
+                                    Barbería Actual
+                                </div>
+                                <div className="flex items-center gap-2 mb-3 px-3">
+                                    {barbershop.logo ? (
+                                        <img 
+                                            src={barbershop.logo.startsWith('http') ? barbershop.logo : `/storage/${barbershop.logo}`}
+                                            alt={barbershop.name}
+                                            className="h-8 w-8 rounded-full object-cover border border-white/20"
+                                        />
+                                    ) : (
+                                        <div className="h-8 w-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
+                                            <span className="text-white text-sm">💈</span>
+                                        </div>
+                                    )}
+                                    <span className="text-sm font-medium text-white">
+                                        {barbershop.name}
+                                    </span>
+                                </div>
+                            </div>
+                            <ResponsiveNavLink
+                                href={route('admin.barbershops.index')}
+                                className="text-white/80 hover:text-white"
+                            >
+                                Cambiar de Barbería
+                            </ResponsiveNavLink>
+                        </div>
+                    )}
+
+                    <div className="border-t border-white/10 pb-4 pt-4 px-2 mt-auto">
+                        <div className="px-3 mb-3">
                             <div className="text-base font-medium text-white">
                                 {user.name}
                             </div>
@@ -238,7 +322,7 @@ export default function AuthenticatedLayout({ header, children }) {
                             </div>
                         </div>
 
-                        <div className="mt-3 space-y-1">
+                        <div className="space-y-1">
                             <ResponsiveNavLink href={route('profile.edit')} className="text-white/80 hover:text-white">
                                 Profile
                             </ResponsiveNavLink>
@@ -253,7 +337,7 @@ export default function AuthenticatedLayout({ header, children }) {
                         </div>
                     </div>
                 </div>
-            </nav>
+            </div>
 
             {header && (
                 <header className="bg-black/50 backdrop-blur-md border-b border-white/10 relative z-40">

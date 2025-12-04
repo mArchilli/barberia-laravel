@@ -5,21 +5,6 @@ export default function Dashboard({ auth, barbershop }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={
-                <div className="flex justify-between items-center">
-                    <h2 className="text-3xl font-bold tracking-tight text-white">
-                        Dashboard Admin
-                    </h2>
-                    {barbershop && (
-                        <Link
-                            href={route('admin.barbershops.index')}
-                            className="text-white/70 hover:text-white transition text-sm"
-                        >
-                            Cambiar Barbería →
-                        </Link>
-                    )}
-                </div>
-            }
         >
             <Head title="Dashboard Admin" />
 
