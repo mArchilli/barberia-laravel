@@ -1,9 +1,11 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
+import RegisterCutModal from '@/Components/RegisterCutModal';
 import { useState } from 'react';
 
-export default function Dashboard({ auth, barbershop }) {
+export default function Dashboard({ auth, barbershop, services, paymentMethods }) {
     const [showBalance, setShowBalance] = useState(true);
+    const [showModal, setShowModal] = useState(false);
     
     // Obtener fecha actual
     const today = new Date();
@@ -57,10 +59,19 @@ export default function Dashboard({ auth, barbershop }) {
 
             <div className="min-h-screen bg-black pt-6 pb-12">
                 <div className="mx-auto max-w-7xl px-6">
-                    {/* Bienvenida */}
-                    <h3 className="text-3xl font-bold text-white mb-6">
-                        Bienvenido, {auth.user.name}
-                    </h3>
+                    {/* Bienvenida y botón */}
+                    <div className="flex justify-between items-center mb-6">
+                        <h3 className="text-3xl font-bold text-white">
+                            Bienvenido, {auth.user.name}
+                        </h3>
+                        <button
+                            onClick={() => setShowModal(true)}
+                            className="px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition flex items-center gap-2"
+                        >
+                            <span className="text-xl">➕</span>
+                            Registrar Corte
+                        </button>
+                    </div>
 
                     {/* Card Principal - Caja de Hoy */}
                     <div className="mb-8 rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-md p-8 shadow-2xl shadow-black/50">
@@ -95,7 +106,7 @@ export default function Dashboard({ auth, barbershop }) {
                         </div>
 
                         <Link 
-                            href="#"
+                            href={route('admin.cash-register.index')}
                             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium transition-colors border border-white/20"
                         >
                             Ver detalles de caja →
@@ -116,10 +127,10 @@ export default function Dashboard({ auth, barbershop }) {
                                 </div>
                             </div>
                             <Link 
-                                href="#"
+                                href={route('admin.my-cuts.index')}
                                 className="text-white/70 hover:text-white text-sm transition-colors inline-flex items-center gap-1"
                             >
-                                Sumar servicio realizado →
+                                Ver mi rendimiento →
                             </Link>
                         </div>
 
@@ -181,6 +192,15 @@ export default function Dashboard({ auth, barbershop }) {
                     </div>
                 </div>
             </div>
+
+            {/* Modal de Registro de Corte */}
+            <RegisterCutModal 
+                show={showModal}
+                onClose={() => setShowModal(false)}
+                services={services}
+                paymentMethods={paymentMethods}
+                storeRoute="admin.my-cuts.store"
+            />
         </AuthenticatedLayout>
     );
 }

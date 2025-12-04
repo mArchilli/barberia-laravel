@@ -42,12 +42,29 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin/barbershops
 Route::middleware(['auth', 'verified', 'role:admin', 'admin.barbershop'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         $barbershop = null;
+        $services = collect();
+        $paymentMethods = collect();
+        
         if (session('selected_barbershop_id')) {
-            $barbershop = Barbershop::find(session('selected_barbershop_id'));
+            $barbershopId = session('selected_barbershop_id');
+            $barbershop = Barbershop::find($barbershopId);
+            
+            // Obtener servicios y métodos de pago para la modal
+            $services = \App\Models\Service::where('barbershop_id', $barbershopId)
+                ->where('is_active', true)
+                ->orderBy('name')
+                ->get();
+
+            $paymentMethods = \App\Models\PaymentMethod::where('barbershop_id', $barbershopId)
+                ->where('is_active', true)
+                ->orderBy('name')
+                ->get();
         }
         
         return Inertia::render('Dashboard', [
             'barbershop' => $barbershop,
+            'services' => $services,
+            'paymentMethods' => $paymentMethods,
         ]);
     })->name('dashboard');
     
@@ -81,6 +98,15 @@ Route::middleware(['auth', 'verified', 'role:admin', 'admin.barbershop'])->prefi
     
     // Rutas de medios de pago
     Route::resource('payment-methods', \App\Http\Controllers\PaymentMethodController::class)->except(['show']);
+    
+    // Ruta de caja
+    Route::get('/cash-register', [\App\Http\Controllers\CashRegisterController::class, 'index'])->name('cash-register.index');
+    
+    // Rutas de mi rendimiento (cortes del admin)
+    Route::prefix('my-cuts')->name('my-cuts.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Admin\CutController::class, 'index'])->name('index');
+        Route::post('/', [\App\Http\Controllers\Admin\CutController::class, 'store'])->name('store');
+    });
 });
 
 // Dashboard Barbero

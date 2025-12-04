@@ -1,7 +1,7 @@
 import { useForm } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function RegisterCutModal({ show, onClose, services, paymentMethods }) {
+export default function RegisterCutModal({ show, onClose, services, paymentMethods, storeRoute = 'barber.cuts.store' }) {
     const [selectedService, setSelectedService] = useState(null);
     
     // Obtener fecha y hora actual de Argentina (UTC-3)
@@ -41,7 +41,7 @@ export default function RegisterCutModal({ show, onClose, services, paymentMetho
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('barber.cuts.store'), {
+        post(route(storeRoute), {
             onSuccess: () => {
                 reset();
                 setSelectedService(null);

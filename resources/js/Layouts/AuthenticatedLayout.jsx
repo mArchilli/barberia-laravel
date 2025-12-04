@@ -76,35 +76,25 @@ export default function AuthenticatedLayout({ header, children }) {
                                             Métodos de Pago
                                         </NavLink>
                                         <NavLink
-                                            href={route('admin.settings.index')}
-                                            active={route().current('admin.settings.*')}
+                                            href={route('admin.my-cuts.index')}
+                                            active={route().current('admin.my-cuts.*')}
                                             className="text-white/80 hover:text-white"
                                         >
-                                            Configuración
+                                            Mi Rendimiento
                                         </NavLink>
                                         <NavLink
-                                            href="#"
-                                            className="text-white/80 hover:text-white"
-                                        >
-                                            Personalización
-                                        </NavLink>
-                                        <NavLink
-                                            href="#"
+                                            href={route('admin.cash-register.index')}
+                                            active={route().current('admin.cash-register.*')}
                                             className="text-white/80 hover:text-white"
                                         >
                                             Caja
                                         </NavLink>
                                         <NavLink
-                                            href="#"
+                                            href={route('admin.settings.index')}
+                                            active={route().current('admin.settings.*')}
                                             className="text-white/80 hover:text-white"
                                         >
-                                            Reportes
-                                        </NavLink>
-                                        <NavLink
-                                            href="#"
-                                            className="text-white/80 hover:text-white"
-                                        >
-                                            Citas
+                                            Configuración
                                         </NavLink>
                                     </>
                                 )}
@@ -293,51 +283,26 @@ export default function AuthenticatedLayout({ header, children }) {
                                     Métodos de Pago
                                 </ResponsiveNavLink>
                                 <ResponsiveNavLink
+                                    href={route('admin.my-cuts.index')}
+                                    active={route().current('admin.my-cuts.*')}
+                                    className="text-white/80 hover:text-white transition-colors"
+                                >
+                                    Mi Rendimiento
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink
+                                    href={route('admin.cash-register.index')}
+                                    active={route().current('admin.cash-register.*')}
+                                    className="text-white/80 hover:text-white transition-colors"
+                                >
+                                    Caja
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink
                                     href={route('admin.settings.index')}
                                     active={route().current('admin.settings.*')}
                                     className="text-white/80 hover:text-white transition-colors"
                                 >
                                     Configuración
                                 </ResponsiveNavLink>
-
-                                {/* Sección Personalización */}
-                                <div >
-                                    
-                                    <ResponsiveNavLink
-                                        href="#"
-                                        className="text-white/80 hover:text-white transition-colors"
-                                    >
-                                        Ajustes
-                                    </ResponsiveNavLink>
-                                </div>
-
-                                {/* Otras secciones */}
-                                <div >
-                                    <ResponsiveNavLink
-                                        href="#"
-                                        className="text-white/80 hover:text-white transition-colors"
-                                    >
-                                        Caja
-                                    </ResponsiveNavLink>
-                                    <ResponsiveNavLink
-                                        href="#"
-                                        className="text-white/80 hover:text-white transition-colors"
-                                    >
-                                        Gastos
-                                    </ResponsiveNavLink>
-                                    <ResponsiveNavLink
-                                        href="#"
-                                        className="text-white/80 hover:text-white transition-colors"
-                                    >
-                                        Reportes
-                                    </ResponsiveNavLink>
-                                    <ResponsiveNavLink
-                                        href="#"
-                                        className="text-white/80 hover:text-white transition-colors"
-                                    >
-                                        Citas
-                                    </ResponsiveNavLink>
-                                </div>
                             </>
                         )}
                         

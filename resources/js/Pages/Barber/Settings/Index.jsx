@@ -22,7 +22,7 @@ export default function Index({ auth, user }) {
             <Head title="Configuración" />
 
             <div className="py-12">
-                <div className="mx-auto max-w-4xl sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     {/* Header */}
                     <div className="mb-8">
                         <h1 className="text-3xl font-bold text-white">
