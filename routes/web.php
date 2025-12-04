@@ -78,6 +78,9 @@ Route::middleware(['auth', 'verified', 'role:admin', 'admin.barbershop'])->prefi
         Route::post('/update-schedules', [\App\Http\Controllers\SettingsController::class, 'updateSchedules'])->name('update-schedules');
         Route::post('/send-password-reset', [\App\Http\Controllers\SettingsController::class, 'sendPasswordReset'])->name('send-password-reset');
     });
+    
+    // Rutas de medios de pago
+    Route::resource('payment-methods', \App\Http\Controllers\PaymentMethodController::class)->except(['show']);
 });
 
 // Dashboard Barbero

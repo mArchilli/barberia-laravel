@@ -35,4 +35,9 @@ class Barbershop extends Model
     {
         return $this->hasMany(BarbershopSchedule::class);
     }
+
+    public function paymentMethods()
+    {
+        return $this->hasMany(PaymentMethod::class);
+    }
 }

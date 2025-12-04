@@ -69,6 +69,13 @@ export default function AuthenticatedLayout({ header, children }) {
                                             Servicios
                                         </NavLink>
                                         <NavLink
+                                            href={route('admin.payment-methods.index')}
+                                            active={route().current('admin.payment-methods.*')}
+                                            className="text-white/80 hover:text-white"
+                                        >
+                                            Métodos de Pago
+                                        </NavLink>
+                                        <NavLink
                                             href={route('admin.settings.index')}
                                             active={route().current('admin.settings.*')}
                                             className="text-white/80 hover:text-white"
@@ -277,6 +284,13 @@ export default function AuthenticatedLayout({ header, children }) {
                                     className="text-white/80 hover:text-white transition-colors"
                                 >
                                     Servicios
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink
+                                    href={route('admin.payment-methods.index')}
+                                    active={route().current('admin.payment-methods.*')}
+                                    className="text-white/80 hover:text-white transition-colors"
+                                >
+                                    Métodos de Pago
                                 </ResponsiveNavLink>
                                 <ResponsiveNavLink
                                     href={route('admin.settings.index')}
