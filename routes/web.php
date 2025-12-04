@@ -107,6 +107,12 @@ Route::middleware(['auth', 'verified', 'role:admin', 'admin.barbershop'])->prefi
         Route::get('/', [\App\Http\Controllers\Admin\CutController::class, 'index'])->name('index');
         Route::post('/', [\App\Http\Controllers\Admin\CutController::class, 'store'])->name('store');
     });
+    
+    // Rutas de personalización
+    Route::prefix('customization')->name('customization.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\CustomizationController::class, 'index'])->name('index');
+        Route::post('/update', [\App\Http\Controllers\CustomizationController::class, 'update'])->name('update');
+    });
 });
 
 // Dashboard Barbero

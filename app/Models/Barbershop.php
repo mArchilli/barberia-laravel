@@ -13,6 +13,7 @@ class Barbershop extends Model
         'opening_time',
         'closing_time',
         'logo',
+        'accent_color',
     ];
 
     protected $casts = [

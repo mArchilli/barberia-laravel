@@ -316,6 +316,13 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Configuración
                                 </ResponsiveNavLink>
+                                <ResponsiveNavLink
+                                    href={route('admin.customization.index')}
+                                    active={route().current('admin.customization.*')}
+                                    className="text-white/80 hover:text-white transition-colors"
+                                >
+                                    Personalización
+                                </ResponsiveNavLink>
                             </>
                         )}
                         
