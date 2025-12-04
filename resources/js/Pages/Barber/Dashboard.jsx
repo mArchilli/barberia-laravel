@@ -1,7 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
+import RegisterCutModal from '@/Components/RegisterCutModal';
+import { useState } from 'react';
 
-export default function BarberDashboard({ auth, stats }) {
+export default function BarberDashboard({ auth, stats, services, paymentMethods }) {
+    const [showModal, setShowModal] = useState(false);
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -106,9 +109,9 @@ export default function BarberDashboard({ auth, stats }) {
                         </Link>
 
                         {/* Registrar Corte */}
-                        <Link
-                            href={route('barber.cuts.create')}
-                            className="group border-2 border-white bg-white/10 backdrop-blur-sm p-6 hover:bg-white/20 transition-all duration-300 cursor-pointer"
+                        <button
+                            onClick={() => setShowModal(true)}
+                            className="group border-2 border-white bg-white/10 backdrop-blur-sm p-6 hover:bg-white/20 transition-all duration-300 cursor-pointer w-full text-left"
                         >
                             <div className="flex items-center justify-between mb-4">
                                 <h4 className="text-xl font-bold text-white">Registrar Corte</h4>
@@ -118,7 +121,7 @@ export default function BarberDashboard({ auth, stats }) {
                             <div className="text-white font-semibold">
                                 Registrar ahora →
                             </div>
-                        </Link>
+                        </button>
 
                         {/* Mi Agenda */}
                         <div className="group border border-white/10 bg-white/5 backdrop-blur-sm p-6 hover:bg-white/10 transition-all duration-300">
@@ -147,6 +150,14 @@ export default function BarberDashboard({ auth, stats }) {
                     </div>
                 </div>
             </div>
+
+            {/* Modal de Registro de Corte */}
+            <RegisterCutModal 
+                show={showModal}
+                onClose={() => setShowModal(false)}
+                services={services}
+                paymentMethods={paymentMethods}
+            />
         </AuthenticatedLayout>
     );
 }

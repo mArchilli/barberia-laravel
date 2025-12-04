@@ -1,7 +1,10 @@
 import { Head, Link } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import RegisterCutModal from '@/Components/RegisterCutModal';
+import { useState } from 'react';
 
-export default function Index({ auth, cuts, stats }) {
+export default function Index({ auth, cuts, stats, services, paymentMethods }) {
+    const [showModal, setShowModal] = useState(false);
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('es-ES', {
@@ -29,12 +32,12 @@ export default function Index({ auth, cuts, stats }) {
                                 Historial de servicios realizados
                             </p>
                         </div>
-                        <Link
-                            href={route('barber.cuts.create')}
-                            className="px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition inline-block"
+                        <button
+                            onClick={() => setShowModal(true)}
+                            className="px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition"
                         >
                             + Registrar Corte
-                        </Link>
+                        </button>
                     </div>
 
                     {/* Estadísticas */}
@@ -147,17 +150,25 @@ export default function Index({ auth, cuts, stats }) {
                                 <p className="text-white/60 mb-6">
                                     Comienza a registrar tus servicios realizados
                                 </p>
-                                <Link
-                                    href={route('barber.cuts.create')}
+                                <button
+                                    onClick={() => setShowModal(true)}
                                     className="inline-block px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition"
                                 >
                                     Registrar Primer Corte
-                                </Link>
+                                </button>
                             </div>
                         )}
                     </div>
                 </div>
             </div>
+
+            {/* Modal de Registro de Corte */}
+            <RegisterCutModal 
+                show={showModal}
+                onClose={() => setShowModal(false)}
+                services={services}
+                paymentMethods={paymentMethods}
+            />
         </AuthenticatedLayout>
     );
 }

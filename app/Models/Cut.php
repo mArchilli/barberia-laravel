@@ -9,6 +9,7 @@ class Cut extends Model
     protected $fillable = [
         'barber_id',
         'service_id',
+        'payment_method_id',
         'client_name',
         'service_date',
         'final_price',
@@ -28,5 +29,10 @@ class Cut extends Model
     public function service()
     {
         return $this->belongsTo(Service::class);
+    }
+
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class);
     }
 }

@@ -87,11 +87,25 @@ Route::middleware(['auth', 'verified', 'role:admin', 'admin.barbershop'])->prefi
 Route::middleware(['auth', 'verified', 'role:barber'])->prefix('barber')->name('barber.')->group(function () {
     Route::get('/dashboard', function () {
         $barber = Auth::user();
+        $barbershop = $barber->barbershop;
         $cutController = new \App\Http\Controllers\Barber\CutController();
         $stats = $cutController->getStats();
         
+        // Obtener servicios y métodos de pago para la modal
+        $services = \App\Models\Service::where('barbershop_id', $barbershop->id)
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get();
+
+        $paymentMethods = \App\Models\PaymentMethod::where('barbershop_id', $barbershop->id)
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get();
+        
         return Inertia::render('Barber/Dashboard', [
             'stats' => $stats,
+            'services' => $services,
+            'paymentMethods' => $paymentMethods,
         ]);
     })->name('dashboard');
     
