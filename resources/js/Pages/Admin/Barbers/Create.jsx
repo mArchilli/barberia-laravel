@@ -38,7 +38,7 @@ export default function Create({ auth, barbershop, availableBarbers }) {
                         </div>
                         <Link
                             href={route('admin.barbers.create-new')}
-                            className="px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition"
+                            className="px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition rounded-xl"
                         >
                             + Crear Nuevo Barbero
                         </Link>
@@ -47,12 +47,12 @@ export default function Create({ auth, barbershop, availableBarbers }) {
                     {/* Lista de Barberos Disponibles */}
                     {availableBarbers.length > 0 ? (
                         <form onSubmit={handleSubmit}>
-                            <div className="grid gap-4 md:grid-cols-2">
+                            <div className="grid gap-3 md:grid-cols-2">
                                 {availableBarbers.map((barber) => (
                                     <label
                                         key={barber.id}
                                         className={`
-                                            border cursor-pointer p-6 transition-all
+                                            rounded-2xl border cursor-pointer p-6 transition-all
                                             ${data.barber_id === barber.id 
                                                 ? 'border-white bg-white/10' 
                                                 : 'border-white/10 bg-white/5 hover:bg-white/10'
@@ -110,21 +110,21 @@ export default function Create({ auth, barbershop, availableBarbers }) {
                             <div className="mt-6 flex gap-4">
                                 <Link
                                     href={route('admin.barbers.index')}
-                                    className="flex-1 py-3 bg-white/10 text-white text-center font-semibold border border-white/20 hover:bg-white/20 transition"
+                                    className="flex-1 py-3 rounded-xl bg-white/10 text-white text-center font-semibold border border-white/20 hover:bg-white/20 transition"
                                 >
                                     Cancelar
                                 </Link>
                                 <button
                                     type="submit"
                                     disabled={processing || !data.barber_id}
-                                    className="flex-1 py-3 bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="flex-1 py-3 rounded-xl bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {processing ? 'Vinculando...' : 'Vincular Barbero Seleccionado'}
                                 </button>
                             </div>
                         </form>
                     ) : (
-                        <div className="border border-white/10 bg-white/5 backdrop-blur-sm p-12 text-center">
+                        <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-12 text-center">
                             <div className="text-6xl mb-4">✂️</div>
                             <h3 className="text-xl font-bold text-white mb-2">
                                 No hay barberos disponibles
@@ -134,7 +134,7 @@ export default function Create({ auth, barbershop, availableBarbers }) {
                             </p>
                             <Link
                                 href={route('admin.barbers.create-new')}
-                                className="inline-block px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition"
+                                className="inline-block px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition rounded-xl"
                             >
                                 Crear Nuevo Barbero
                             </Link>

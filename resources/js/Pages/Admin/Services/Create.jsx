@@ -41,7 +41,7 @@ export default function Create({ auth, barbershop }) {
                     </div>
 
                     {/* Formulario */}
-                    <form onSubmit={handleSubmit} className="border border-white/10 bg-white/5 backdrop-blur-sm p-8">
+                    <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8">
                         {/* Nombre */}
                         <div className="mb-6">
                             <label htmlFor="name" className="block text-white font-semibold mb-2">
@@ -52,7 +52,7 @@ export default function Create({ auth, barbershop }) {
                                 type="text"
                                 value={data.name}
                                 onChange={(e) => setData('name', e.target.value)}
-                                className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                                className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
                                 placeholder="Ej: Corte de Cabello"
                             />
                             {errors.name && (
@@ -72,7 +72,7 @@ export default function Create({ auth, barbershop }) {
                                 max="480"
                                 value={data.duration}
                                 onChange={(e) => setData('duration', e.target.value)}
-                                className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                                className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
                                 placeholder="30"
                             />
                             {errors.duration && (
@@ -97,7 +97,7 @@ export default function Create({ auth, barbershop }) {
                                     min="0"
                                     value={data.price}
                                     onChange={(e) => setData('price', e.target.value)}
-                                    className="w-full pl-8 pr-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                                    className="w-full pl-8 pr-4 py-3 rounded-lg bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
                                     placeholder="0.00"
                                 />
                             </div>
@@ -107,7 +107,7 @@ export default function Create({ auth, barbershop }) {
                         </div>
 
                         {/* Estado Activo */}
-                        <div className="mb-8 p-4 bg-white/5 border border-white/10">
+                        <div className="mb-8 p-4 rounded-lg bg-white/5 border border-white/10">
                             <ToggleSwitch
                                 checked={data.is_active}
                                 onChange={(value) => setData('is_active', value)}
@@ -120,14 +120,14 @@ export default function Create({ auth, barbershop }) {
                         <div className="flex gap-4">
                             <Link
                                 href={route('admin.services.index')}
-                                className="flex-1 py-3 bg-white/10 text-white text-center font-semibold border border-white/20 hover:bg-white/20 transition"
+                                className="flex-1 py-3 rounded-xl bg-white/10 text-white text-center font-semibold border border-white/20 hover:bg-white/20 transition"
                             >
                                 Cancelar
                             </Link>
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="flex-1 py-3 bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="flex-1 py-3 rounded-xl bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {processing ? 'Creando...' : 'Crear Servicio'}
                             </button>
@@ -142,3 +142,4 @@ export default function Create({ auth, barbershop }) {
         </AuthenticatedLayout>
     );
 }
+

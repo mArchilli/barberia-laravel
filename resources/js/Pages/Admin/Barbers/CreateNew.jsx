@@ -41,8 +41,8 @@ export default function CreateNew({ auth, barbershop }) {
                     </div>
 
                     {/* Formulario */}
-                    <form onSubmit={handleSubmit} className="border border-white/10 bg-white/5 backdrop-blur-sm p-8">
-                        {/* Nombre */}
+                    <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8">
+                        {/* Nombre */ }
                         <div className="mb-6">
                             <label htmlFor="name" className="block text-white font-semibold mb-2">
                                 Nombre Completo *
@@ -52,7 +52,7 @@ export default function CreateNew({ auth, barbershop }) {
                                 type="text"
                                 value={data.name}
                                 onChange={(e) => setData('name', e.target.value)}
-                                className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                                className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
                                 placeholder="Ej: Juan Pérez"
                             />
                             {errors.name && (
@@ -70,7 +70,7 @@ export default function CreateNew({ auth, barbershop }) {
                                 type="email"
                                 value={data.email}
                                 onChange={(e) => setData('email', e.target.value)}
-                                className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                                className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
                                 placeholder="barbero@email.com"
                             />
                             {errors.email && (
@@ -88,7 +88,7 @@ export default function CreateNew({ auth, barbershop }) {
                                 type="tel"
                                 value={data.phone}
                                 onChange={(e) => setData('phone', e.target.value)}
-                                className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                                className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
                                 placeholder="+1 (555) 123-4567"
                             />
                             {errors.phone && (
@@ -106,7 +106,7 @@ export default function CreateNew({ auth, barbershop }) {
                                 type="password"
                                 value={data.password}
                                 onChange={(e) => setData('password', e.target.value)}
-                                className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                                className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
                                 placeholder="Mínimo 8 caracteres"
                             />
                             {errors.password && (
@@ -124,13 +124,13 @@ export default function CreateNew({ auth, barbershop }) {
                                 type="password"
                                 value={data.password_confirmation}
                                 onChange={(e) => setData('password_confirmation', e.target.value)}
-                                className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                                className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
                                 placeholder="Repite la contraseña"
                             />
                         </div>
 
                         {/* Información adicional */}
-                        <div className="mb-6 p-4 bg-white/5 border border-white/10">
+                        <div className="mb-6 p-4 rounded-lg bg-white/5 border border-white/10">
                             <p className="text-sm text-white/70">
                                 <span className="font-semibold text-white">ℹ️ Información:</span> El barbero podrá iniciar sesión con este correo y contraseña para gestionar sus propias citas y ver su agenda personal.
                             </p>
@@ -140,14 +140,14 @@ export default function CreateNew({ auth, barbershop }) {
                         <div className="flex gap-4">
                             <Link
                                 href={route('admin.barbers.create')}
-                                className="flex-1 py-3 bg-white/10 text-white text-center font-semibold border border-white/20 hover:bg-white/20 transition"
+                                className="flex-1 py-3 rounded-xl bg-white/10 text-white text-center font-semibold border border-white/20 hover:bg-white/20 transition"
                             >
                                 Cancelar
                             </Link>
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="flex-1 py-3 bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="flex-1 py-3 rounded-xl bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {processing ? 'Creando...' : 'Crear Barbero'}
                             </button>
