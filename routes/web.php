@@ -44,6 +44,8 @@ Route::middleware(['auth', 'verified', 'role:admin', 'admin.barbershop'])->prefi
         $barbershop = null;
         $services = collect();
         $paymentMethods = collect();
+        $cutsToday = 0;
+        $revenueToday = 0;
         
         if (session('selected_barbershop_id')) {
             $barbershopId = session('selected_barbershop_id');
@@ -59,12 +61,55 @@ Route::middleware(['auth', 'verified', 'role:admin', 'admin.barbershop'])->prefi
                 ->where('is_active', true)
                 ->orderBy('name')
                 ->get();
+            
+            // Obtener estadísticas del día (barberos de la barbería + admin actual)
+            $adminId = Auth::id();
+            
+            $cutsToday = \App\Models\Cut::whereDate('service_date', today())
+                ->where(function($query) use ($barbershopId, $adminId) {
+                    $query->whereHas('barber', function($q) use ($barbershopId) {
+                        $q->where('barbershop_id', $barbershopId);
+                    })->orWhere('barber_id', $adminId);
+                })
+                ->count();
+            
+            $revenueToday = \App\Models\Cut::whereDate('service_date', today())
+                ->where(function($query) use ($barbershopId, $adminId) {
+                    $query->whereHas('barber', function($q) use ($barbershopId) {
+                        $q->where('barbershop_id', $barbershopId);
+                    })->orWhere('barber_id', $adminId);
+                })
+                ->sum('final_price');
+            
+            // Obtener servicios del día de hoy
+            $recentCuts = \App\Models\Cut::whereDate('service_date', today())
+                ->where(function($query) use ($barbershopId, $adminId) {
+                    $query->whereHas('barber', function($q) use ($barbershopId) {
+                        $q->where('barbershop_id', $barbershopId);
+                    })->orWhere('barber_id', $adminId);
+                })
+                ->with(['service', 'barber', 'paymentMethod'])
+                ->orderBy('service_date', 'desc')
+                ->limit(6)
+                ->get()
+                ->map(function($cut) {
+                    return [
+                        'id' => $cut->id,
+                        'service_name' => $cut->service->name,
+                        'client_name' => $cut->client_name,
+                        'barber_name' => $cut->barber->name,
+                        'service_date' => $cut->service_date,
+                    ];
+                });
         }
         
         return Inertia::render('Dashboard', [
             'barbershop' => $barbershop,
             'services' => $services,
             'paymentMethods' => $paymentMethods,
+            'cutsToday' => $cutsToday,
+            'revenueToday' => $revenueToday,
+            'recentCuts' => $recentCuts ?? collect(),
             'accentColor' => $barbershop?->accent_color ?? '#ffffff',
         ]);
     })->name('dashboard');

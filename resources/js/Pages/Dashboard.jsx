@@ -3,7 +3,7 @@ import { Head, Link } from '@inertiajs/react';
 import RegisterCutModal from '@/Components/RegisterCutModal';
 import { useState } from 'react';
 
-export default function Dashboard({ auth, barbershop, services, paymentMethods, accentColor }) {
+export default function Dashboard({ auth, barbershop, services, paymentMethods, cutsToday, revenueToday, recentCuts, accentColor }) {
     const [showBalance, setShowBalance] = useState(true);
     const [showModal, setShowModal] = useState(false);
     
@@ -13,11 +13,6 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods, 
     const dateFormatted = today.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
     
     // Datos de ejemplo (estos deberían venir del backend)
-    const totalBalance = 45750.50;
-    const lastIncome = 1200.00;
-    const lastExpense = 350.00;
-    const cutsToday = 15;
-    const cutsComparison = 22; // % comparación con mes anterior
     const appointmentsToday = 8;
     
     // Rendimiento de barberos (ejemplo - debería venir del backend)
@@ -68,7 +63,7 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods, 
                     <div className="mb-3 rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-md p-8 shadow-2xl shadow-black/50">
                         <div className="mb-6">
                             <p className="text-white/60 text-sm uppercase tracking-wider mb-1">
-                                Saldo total: {dayName}
+                                Ingresos del día: {dayName}
                             </p>
                             <p className="text-white/40 text-xs">
                                 {dateFormatted}
@@ -77,7 +72,7 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods, 
 
                         <div className="mb-6 flex items-center gap-3">
                             <h2 className="text-5xl font-bold text-white">
-                                {showBalance ? `$${Math.round(totalBalance).toLocaleString('es-AR')}` : '$ ***'}
+                                {showBalance ? `$${parseFloat(revenueToday || 0).toFixed(2)}` : '$ ***'}
                             </h2>
                             <button
                                 onClick={() => setShowBalance(!showBalance)}
@@ -150,7 +145,7 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods, 
                         </div>
                     </div>
 
-                    {/* Botón Registrar Corte */}
+                    {/* Botón Registrar Servicio */}
                     <button
                         onClick={() => setShowModal(true)}
                         className="w-full mb-3 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-3">
@@ -158,11 +153,13 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods, 
                         <svg className="w-6 h-6" fill="none" stroke={accentColor} viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                         </svg>
-                        <span className="text-xl font-bold text-white">Registrar Corte</span>
+                        <span className="text-xl font-bold text-white">Registrar Servicio</span>
                     </button>
 
-                    {/* Rendimiento de Barberos */}
-                    <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
+                    {/* Grid: Rendimiento de Barberos y Últimos Servicios */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                        {/* Rendimiento de Barberos */}
+                        <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
                         <div className="mb-6">
                             <p className="text-white/60 text-sm mb-3">Rendimiento de los barberos</p>
                             <div className="flex items-center gap-3">
@@ -196,6 +193,57 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods, 
                         >
                             Ver detalles de rendimiento →
                         </Link>
+                        </div>
+
+                        {/* Últimos 5 Servicios */}
+                        <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
+                            <div className="mb-4">
+                                <p className="text-white/60 text-sm mb-3">Últimos servicios</p>
+                                <div className="flex items-center gap-3">
+                                    <div>
+                                        <svg className="w-8 h-8" fill="none" stroke={accentColor} viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {recentCuts && recentCuts.length > 0 ? (
+                                <div className="overflow-x-auto">
+                                    <table className="w-full">
+                                        <thead>
+                                            <tr className="border-b border-white/10">
+                                            <th className="text-left py-3 px-2 text-xs font-semibold text-white/60 uppercase tracking-wider">Hora</th>
+                                                <th className="text-left py-3 px-2 text-xs font-semibold text-white/60 uppercase tracking-wider">Barbero</th>
+                                                <th className="text-left py-3 px-2 text-xs font-semibold text-white/60 uppercase tracking-wider">Cliente</th>
+                                                <th className="text-left py-3 px-2 text-xs font-semibold text-white/60 uppercase tracking-wider">Servicio</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {recentCuts.slice(0, window.innerWidth >= 1024 ? 6 : 5).map((cut) => {
+                                                const date = new Date(cut.service_date);
+                                                const timeStr = date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+                                                
+                                                return (
+                                                    <tr key={cut.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                                                        <td className="py-3 px-2 text-sm text-white/60 text-left">
+                                                            {timeStr}
+                                                        </td>
+                                                        <td className="py-3 px-2 text-sm text-white/80">{cut.barber_name}</td>
+                                                        <td className="py-3 px-2 text-sm text-white/80">{cut.client_name}</td>
+                                                        <td className="py-3 px-2 text-sm text-white font-medium">{cut.service_name}</td>
+                                                        
+                                                    </tr>
+                                                );
+                                            })}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            ) : (
+                                <p className="text-white/50 text-sm py-4">Aún no se brindaron servicios el día de hoy.</p>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

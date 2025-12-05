@@ -16,9 +16,14 @@ class Cut extends Model
     ];
 
     protected $casts = [
-        'service_date' => 'datetime',
+        'service_date' => 'datetime:Y-m-d H:i:s',
         'final_price' => 'decimal:2',
     ];
+    
+    /**
+     * The attributes that should be mutated to dates without timezone conversion.
+     */
+    protected $dateFormat = 'Y-m-d H:i:s';
 
     // Relaciones
     public function barber()
