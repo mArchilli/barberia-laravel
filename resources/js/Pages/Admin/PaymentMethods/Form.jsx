@@ -48,8 +48,8 @@ export default function Form({ auth, barbershop, paymentMethod }) {
                     </div>
 
                     {/* Formulario */}
-                    <form onSubmit={handleSubmit} className="border border-white/10 bg-white/5 backdrop-blur-sm p-8">
-                        {/* Nombre */}
+                    <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8">
+                        {/* Nombre */ }
                         <div className="mb-6">
                             <label htmlFor="name" className="block text-white font-semibold mb-2">
                                 Nombre del Método de Pago *
@@ -59,7 +59,7 @@ export default function Form({ auth, barbershop, paymentMethod }) {
                                 type="text"
                                 value={data.name}
                                 onChange={(e) => setData('name', e.target.value)}
-                                className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                                className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
                                 placeholder="Ej: Efectivo, Tarjeta de Crédito, Transferencia"
                             />
                             {errors.name && (
@@ -71,7 +71,7 @@ export default function Form({ auth, barbershop, paymentMethod }) {
                         </div>
 
                         {/* Estado Activo */}
-                        <div className="mb-8 p-4 bg-white/5 border border-white/10">
+                        <div className="mb-8 p-4 rounded-lg bg-white/5 border border-white/10">
                             <ToggleSwitch
                                 checked={data.is_active}
                                 onChange={(value) => setData('is_active', value)}
@@ -84,14 +84,14 @@ export default function Form({ auth, barbershop, paymentMethod }) {
                         <div className="flex gap-4">
                             <Link
                                 href={route('admin.payment-methods.index')}
-                                className="flex-1 py-3 bg-white/10 text-white text-center font-semibold border border-white/20 hover:bg-white/20 transition"
+                                className="flex-1 py-3 rounded-xl bg-white/10 text-white text-center font-semibold border border-white/20 hover:bg-white/20 transition"
                             >
                                 Cancelar
                             </Link>
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="flex-1 py-3 bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="flex-1 py-3 rounded-xl bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {processing 
                                     ? (isEditing ? 'Guardando...' : 'Creando...') 
