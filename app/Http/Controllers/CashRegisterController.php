@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cut;
 use App\Models\Barbershop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -14,6 +15,7 @@ class CashRegisterController extends Controller
     {
         $barbershopId = session('selected_barbershop_id');
         $barbershop = Barbershop::findOrFail($barbershopId);
+        $adminId = Auth::id();
         
         // Determinar el rango de fechas según los parámetros
         $startDate = null;
@@ -33,11 +35,13 @@ class CashRegisterController extends Controller
             $endDate = today()->toDateString();
         }
         
-        // Obtener todos los cortes del rango de fechas de la barbería
+        // Obtener todos los cortes del rango de fechas de la barbería (barberos + admin)
         $cuts = Cut::whereDate('service_date', '>=', $startDate)
             ->whereDate('service_date', '<=', $endDate)
-            ->whereHas('barber', function($query) use ($barbershopId) {
-                $query->where('barbershop_id', $barbershopId);
+            ->where(function($query) use ($barbershopId, $adminId) {
+                $query->whereHas('barber', function($q) use ($barbershopId) {
+                    $q->where('barbershop_id', $barbershopId);
+                })->orWhere('barber_id', $adminId);
             })
             ->with(['service', 'barber', 'paymentMethod'])
             ->orderBy('service_date', 'desc')

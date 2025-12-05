@@ -9,9 +9,9 @@ export default function Index({ auth, barbershop, cuts, stats, revenueByPaymentM
     const [endDate, setEndDate] = useState('');
     const [customDate, setCustomDate] = useState('');
 
-    const formatDate = (dateString) => {
+    const formatTime = (dateString) => {
         const date = new Date(dateString);
-        return date.toLocaleDateString('es-ES', {
+        return date.toLocaleTimeString('es-ES', {
             hour: '2-digit',
             minute: '2-digit'
         });
@@ -275,9 +275,9 @@ export default function Index({ auth, barbershop, cuts, stats, revenueByPaymentM
                                     <thead className="border-b border-white/10">
                                         <tr>
                                             <th className="px-6 py-4 text-left text-white/70 font-semibold text-sm">Hora</th>
-                                            <th className="px-6 py-4 text-left text-white/70 font-semibold text-sm">Servicio</th>
-                                            <th className="px-6 py-4 text-left text-white/70 font-semibold text-sm">Cliente</th>
                                             <th className="px-6 py-4 text-left text-white/70 font-semibold text-sm">Barbero</th>
+                                            <th className="px-6 py-4 text-left text-white/70 font-semibold text-sm">Cliente</th>
+                                            <th className="px-6 py-4 text-left text-white/70 font-semibold text-sm">Servicio</th>
                                             <th className="px-6 py-4 text-left text-white/70 font-semibold text-sm">Método de Pago</th>
                                             <th className="px-6 py-4 text-right text-white/70 font-semibold text-sm">Importe</th>
                                         </tr>
@@ -291,11 +291,11 @@ export default function Index({ auth, barbershop, cuts, stats, revenueByPaymentM
                                                 } hover:bg-white/5 transition`}
                                             >
                                                 <td className="px-6 py-4 text-white/70 text-sm">
-                                                    {formatDate(cut.service_date)}
+                                                    {formatTime(cut.service_date)}
                                                 </td>
-                                                <td className="px-6 py-4 text-white text-sm">{cut.service.name}</td>
-                                                <td className="px-6 py-4 text-white text-sm">{cut.client_name}</td>
                                                 <td className="px-6 py-4 text-white text-sm">{cut.barber.name}</td>
+                                                <td className="px-6 py-4 text-white text-sm">{cut.client_name}</td>
+                                                <td className="px-6 py-4 text-white text-sm">{cut.service.name}</td>
                                                 <td className="px-6 py-4 text-white/70 text-sm">
                                                     {cut.payment_method ? cut.payment_method.name : 'Sin especificar'}
                                                 </td>

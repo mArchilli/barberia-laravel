@@ -6,15 +6,11 @@ import { useState } from 'react';
 export default function Index({ auth, cuts, stats, services, paymentMethods }) {
     const [showModal, setShowModal] = useState(false);
 
-    const formatDate = (dateString) => {
+    const formatDateTime = (dateString) => {
         const date = new Date(dateString);
-        return date.toLocaleDateString('es-ES', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
+        const dateStr = date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit' });
+        const timeStr = date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+        return `${dateStr} · ${timeStr}`;
     };
 
     return (
@@ -23,6 +19,17 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                    {/* Botón volver */}
+                    <a
+                        href={route('admin.dashboard')}
+                        className="inline-flex items-center gap-2 text-white/70 hover:text-white transition mb-6"
+                    >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Volver al Dashboard
+                    </a>
+
                     {/* Header */}
                     <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <div>
@@ -35,16 +42,16 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
                         </div>
                         <button
                             onClick={() => setShowModal(true)}
-                            className="px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition"
+                            className="px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition rounded-xl"
                         >
                             + Registrar Corte
                         </button>
                     </div>
 
                     {/* Estadísticas */}
-                    <div className="grid md:grid-cols-3 gap-6 mb-8">
+                    <div className="grid md:grid-cols-3 gap-3 mb-3">
                         {/* Hoy */}
-                        <div className="border border-white/10 bg-white/5 backdrop-blur-sm p-6">
+                        <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
                             <div className="flex items-center justify-between mb-2">
                                 <h3 className="text-white/70 font-semibold">Hoy</h3>
                                 <span className="text-2xl">📅</span>
@@ -64,7 +71,7 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
                         </div>
 
                         {/* Este Mes */}
-                        <div className="border border-white/10 bg-white/5 backdrop-blur-sm p-6">
+                        <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
                             <div className="flex items-center justify-between mb-2">
                                 <h3 className="text-white/70 font-semibold">Este Mes</h3>
                                 <span className="text-2xl">📊</span>
@@ -84,7 +91,7 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
                         </div>
 
                         {/* Total */}
-                        <div className="border border-white/10 bg-white/5 backdrop-blur-sm p-6">
+                        <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
                             <div className="flex items-center justify-between mb-2">
                                 <h3 className="text-white/70 font-semibold">Total</h3>
                                 <span className="text-2xl">💰</span>
@@ -105,7 +112,7 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
                     </div>
 
                     {/* Tabla de Cortes */}
-                    <div className="border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden">
+                    <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden">
                         <div className="p-6 border-b border-white/10">
                             <h2 className="text-xl font-bold text-white">Historial de Cortes</h2>
                         </div>
@@ -113,32 +120,26 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
                         {cuts.length > 0 ? (
                             <div className="overflow-x-auto">
                                 <table className="w-full">
-                                    <thead className="border-b border-white/10">
-                                        <tr>
-                                            <th className="px-6 py-4 text-left text-white/70 font-semibold">Cliente</th>
-                                            <th className="px-6 py-4 text-left text-white/70 font-semibold">Servicio</th>
-                                            <th className="px-6 py-4 text-left text-white/70 font-semibold">Fecha y Hora</th>
-                                            <th className="px-6 py-4 text-left text-white/70 font-semibold">Método de Pago</th>
-                                            <th className="px-6 py-4 text-left text-white/70 font-semibold">Precio</th>
+                                    <thead>
+                                        <tr className="border-b border-white/10">
+                                            <th className="text-left py-3 px-4 text-xs font-semibold text-white/60 uppercase tracking-wider">Fecha/Hora</th>
+                                            <th className="text-left py-3 px-4 text-xs font-semibold text-white/60 uppercase tracking-wider">Cliente</th>
+                                            <th className="text-left py-3 px-4 text-xs font-semibold text-white/60 uppercase tracking-wider">Servicio</th>
+                                            <th className="text-right py-3 px-4 text-xs font-semibold text-white/60 uppercase tracking-wider">Importe</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {cuts.map((cut, index) => (
                                             <tr 
                                                 key={cut.id} 
-                                                className={`${
-                                                    index !== cuts.length - 1 ? 'border-b border-white/10' : ''
-                                                } hover:bg-white/5 transition`}
+                                                className="border-b border-white/5 hover:bg-white/5 transition-colors"
                                             >
-                                                <td className="px-6 py-4 text-white">{cut.client_name}</td>
-                                                <td className="px-6 py-4 text-white">{cut.service.name}</td>
-                                                <td className="px-6 py-4 text-white/70 text-sm">
-                                                    {formatDate(cut.service_date)}
+                                                <td className="py-3 px-4 text-sm text-white/60">
+                                                    {formatDateTime(cut.service_date)}
                                                 </td>
-                                                <td className="px-6 py-4 text-white/70">
-                                                    {cut.payment_method ? cut.payment_method.name : 'Sin especificar'}
-                                                </td>
-                                                <td className="px-6 py-4 text-white font-semibold">
+                                                <td className="py-3 px-4 text-sm text-white/80">{cut.client_name}</td>
+                                                <td className="py-3 px-4 text-sm text-white font-medium">{cut.service.name}</td>
+                                                <td className="py-3 px-4 text-sm font-semibold text-right text-white">
                                                     ${parseFloat(cut.final_price).toFixed(2)}
                                                 </td>
                                             </tr>
@@ -157,7 +158,7 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
                                 </p>
                                 <button
                                     onClick={() => setShowModal(true)}
-                                    className="inline-block px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition"
+                                    className="inline-block px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition rounded-xl"
                                 >
                                     Registrar Primer Corte
                                 </button>
