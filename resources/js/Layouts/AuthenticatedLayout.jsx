@@ -241,14 +241,31 @@ export default function AuthenticatedLayout({ header, children }) {
                             href={route('profile.edit')}
                             className="flex items-center px-4 py-3 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all"
                         >
+                            <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
                             Perfil
                         </Link>
+                        {user.role === 'admin' && (
+                            <Link
+                                href={route('admin.barbershops.index')}
+                                className="flex items-center px-4 py-3 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all"
+                            >
+                                <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/>
+                                </svg>
+                                Cambiar de Barbería
+                            </Link>
+                        )}
                         <Link
                             href={route('logout')}
                             method="post"
                             as="button"
                             className="w-full text-left flex items-center px-4 py-3 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all"
                         >
+                            <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                            </svg>
                             Cerrar sesión
                         </Link>
                     </div>
