@@ -1,16 +1,32 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import RegisterCutModal from '@/Components/RegisterCutModal';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Dashboard({ auth, barbershop, services, paymentMethods, cutsToday, revenueToday, recentCuts, accentColor }) {
     const [showBalance, setShowBalance] = useState(true);
     const [showModal, setShowModal] = useState(false);
+    const [currentTime, setCurrentTime] = useState(new Date());
+    
+    // Actualizar reloj cada segundo
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
+        
+        return () => clearInterval(timer);
+    }, []);
     
     // Obtener fecha actual
     const today = new Date();
     const dayName = today.toLocaleDateString('es-ES', { weekday: 'long' });
     const dateFormatted = today.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+    
+    // Formatear hora - sin segundos para mobile
+    const timeFormatted = currentTime.toLocaleTimeString('es-ES', { 
+        hour: '2-digit', 
+        minute: '2-digit'
+    });
     
     // Datos de ejemplo (estos deberían venir del backend)
     const appointmentsToday = 8;
@@ -54,10 +70,24 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods, 
 
             <div className="min-h-screen bg-black pt-6 pb-12">
                 <div className="mx-auto max-w-7xl px-6">
-                    {/* Bienvenida */}
-                    <h3 className="text-3xl font-bold text-white mb-6">
-                        Bienvenido, <span style={{ color: accentColor }}>{auth.user.name}</span>
-                    </h3>
+                    {/* Header: Bienvenida y Reloj */}
+                    <div className="flex items-center justify-between mb-6 gap-3">
+                        <h3 className="text-2xl md:text-3xl font-bold text-white">
+                            Bienvenido, <span style={{ color: accentColor }}>{auth.user.name}</span>
+                        </h3>
+                        
+                        {/* Reloj en tiempo real */}
+                        <div className="rounded-lg md:rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm px-3 py-2 md:px-6 md:py-3 flex-shrink-0">
+                            <div className="flex items-center gap-2 md:gap-3">
+                                <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke={accentColor} viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span className="text-lg md:text-2xl font-bold text-white tabular-nums">
+                                    {timeFormatted}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
 
                     {/* Card Principal - Caja de Hoy */}
                     <div className="mb-3 rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-md p-8 shadow-2xl shadow-black/50">
@@ -104,43 +134,73 @@ export default function Dashboard({ auth, barbershop, services, paymentMethods, 
                         </Link>
                     </div>
 
-                    {/* Cards de Cortes y Citas */}
+                    {/* Cards de Cortes y Rendimiento */}
                     <div className="grid grid-cols-2 gap-3 mb-3">
                         {/* Servicios del día */}
-                        <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
-                            <p className="text-white/60 text-sm mb-3">Servicios del día</p>
-                            <div className="flex items-center gap-3 mb-3">
-                                <h3 className="text-5xl font-bold text-white">{cutsToday}</h3>
-                                <div>
-                                    <svg className="w-8 h-8" fill="none" stroke={accentColor} viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z" />
-                                    </svg>
+                        <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 flex flex-col">
+                            <p className="text-white/60 text-sm mb-4">Servicios del día</p>
+                            <div className="flex flex-col items-center flex-1 justify-center mb-4">
+                                <div className="flex items-center gap-3">
+                                    <h3 className="text-5xl font-bold text-white">{cutsToday}</h3>
+                                    <div>
+                                        <svg className="w-10 h-10" fill="none" stroke={accentColor} viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z" />
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
                             <Link 
                                 href={route('admin.my-cuts.index')}
-                                className="text-white/70 hover:text-white text-sm transition-colors inline-flex items-center gap-1"
+                                className="text-white/70 hover:text-white text-xs transition-colors inline-flex items-center gap-1 font-medium"
                             >
                                 Ver mi rendimiento →
                             </Link>
                         </div>
 
-                        {/* Citas de hoy */}
-                        <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
-                            <p className="text-white/60 text-sm mb-3">Próximas citas</p>
-                            <div className="flex items-center gap-3 mb-3">
-                                <h3 className="text-5xl font-bold text-white">{appointmentsToday}</h3>
-                                <div>
-                                    <svg className="w-8 h-8" fill="none" stroke={accentColor} viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        {/* Objetivo del día/mes */}
+                        <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 flex flex-col">
+                            <p className="text-white/60 text-sm mb-4">Objetivo del mes</p>
+                            
+                            {/* Anillo de progreso circular */}
+                            <div className="flex flex-col items-center flex-1 justify-center mb-4">
+                                <div className="relative w-24 h-24">
+                                    {/* SVG del anillo */}
+                                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                                        {/* Círculo de fondo */}
+                                        <circle
+                                            cx="60"
+                                            cy="60"
+                                            r="52"
+                                            fill="none"
+                                            stroke="#1A1C22"
+                                            strokeWidth="10"
+                                        />
+                                        {/* Círculo de progreso */}
+                                        <circle
+                                            cx="60"
+                                            cy="60"
+                                            r="52"
+                                            fill="none"
+                                            stroke={accentColor}
+                                            strokeWidth="10"
+                                            strokeLinecap="round"
+                                            strokeDasharray={`${2 * Math.PI * 52}`}
+                                            strokeDashoffset={`${2 * Math.PI * 52 * (1 - 0.75)}`}
+                                            className="transition-all duration-500"
+                                        />
                                     </svg>
+                                    {/* Porcentaje centrado */}
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <span className="text-2xl font-bold text-white">75%</span>
+                                    </div>
                                 </div>
                             </div>
+
                             <Link 
                                 href="#"
-                                className="text-white/70 hover:text-white text-sm transition-colors inline-flex items-center gap-1"
+                                className="text-white/70 hover:text-white text-xs transition-colors inline-flex items-center gap-1 font-medium"
                             >
-                                Ver calendario de hoy →
+                                Ver detalles completos →
                             </Link>
                         </div>
                     </div>

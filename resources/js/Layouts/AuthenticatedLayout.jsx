@@ -10,253 +10,85 @@ export default function AuthenticatedLayout({ header, children }) {
     const barbershop = usePage().props.barbershop;
     const accentColor = barbershop?.accent_color || '#ffffff';
 
-    const [showingNavigationDropdown, setShowingNavigationDropdown] =
-        useState(false);
+    const [showingSideMenu, setShowingSideMenu] = useState(false);
 
     return (
         <div className="min-h-screen bg-black">
             <nav className="fixed top-0 left-0 right-0 border-b border-white/5 bg-black/80 backdrop-blur-xl shadow-lg shadow-black/50 z-50">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex h-16 justify-between">
+                    <div className="flex h-16 justify-between items-center">
+                        {/* Logo y nombre a la izquierda */}
                         <div className="flex items-center gap-3">
-                            {/* Logo y nombre de barbería en móvil */}
-                            <div className="flex shrink-0 items-center gap-3 sm:hidden">
-                                {barbershop?.logo ? (
-                                    <img 
-                                        src={barbershop.logo.startsWith('http') ? barbershop.logo : `/storage/${barbershop.logo}`}
-                                        alt={barbershop?.name || 'Barbería'}
-                                        className="h-10 w-10 rounded-full object-cover border border-white/20"
-                                    />
-                                ) : (
-                                    <div className="h-10 w-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
-                                        <span className="text-white text-lg">💈</span>
-                                    </div>
-                                )}
-                                <span className="text-lg font-bold text-white tracking-wider">
-                                    {barbershop?.name || 'BARBERSHOP'}
-                                </span>
-                            </div>
-
-                            {/* Logo desktop */}
-                            <div className="hidden sm:flex shrink-0 items-center">
-                                <Link href="/" className="text-2xl font-bold text-white tracking-wider">
-                                    BARBER<span className="text-white/70">SHOP</span>
-                                </Link>
-                            </div>
-
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route('dashboard')}
-                                    active={route().current('dashboard')}
-                                    className="text-white/80 hover:text-white"
-                                >
-                                    Panel principal
-                                </NavLink>
-                                
-                                {user.role === 'admin' && (
-                                    <>
-                                        <NavLink
-                                            href={route('admin.barbers.index')}
-                                            active={route().current('admin.barbers.*')}
-                                            className="text-white/80 hover:text-white"
-                                        >
-                                            Barberos
-                                        </NavLink>
-                                        <NavLink
-                                            href={route('admin.services.index')}
-                                            active={route().current('admin.services.*')}
-                                            className="text-white/80 hover:text-white"
-                                        >
-                                            Servicios
-                                        </NavLink>
-                                        <NavLink
-                                            href={route('admin.payment-methods.index')}
-                                            active={route().current('admin.payment-methods.*')}
-                                            className="text-white/80 hover:text-white"
-                                        >
-                                            Métodos de Pago
-                                        </NavLink>
-                                        <NavLink
-                                            href={route('admin.my-cuts.index')}
-                                            active={route().current('admin.my-cuts.*')}
-                                            className="text-white/80 hover:text-white"
-                                        >
-                                            Mi Rendimiento
-                                        </NavLink>
-                                        <NavLink
-                                            href={route('admin.cash-register.index')}
-                                            active={route().current('admin.cash-register.*')}
-                                            className="text-white/80 hover:text-white"
-                                        >
-                                            Caja
-                                        </NavLink>
-                                        <NavLink
-                                            href={route('admin.settings.index')}
-                                            active={route().current('admin.settings.*')}
-                                            className="text-white/80 hover:text-white"
-                                        >
-                                            Configuración
-                                        </NavLink>
-                                    </>
-                                )}
-                                
-                                {user.role === 'barber' && (
-                                    <>
-                                        <NavLink
-                                            href={route('barber.cuts.index')}
-                                            active={route().current('barber.cuts.*')}
-                                            className="text-white/80 hover:text-white"
-                                        >
-                                            Mis Cortes
-                                        </NavLink>
-                                        <NavLink
-                                            href={route('barber.settings.index')}
-                                            active={route().current('barber.settings.*')}
-                                            className="text-white/80 hover:text-white"
-                                        >
-                                            Configuración
-                                        </NavLink>
-                                        <NavLink
-                                            href={route('barber.settings.index')}
-                                            className="text-white/80 hover:text-white"
-                                        >
-                                            Personalización
-                                        </NavLink>
-                                        <NavLink
-                                            href="#"
-                                            className="text-white/80 hover:text-white"
-                                        >
-                                            Caja
-                                        </NavLink>
-                                        <NavLink
-                                            href="#"
-                                            className="text-white/80 hover:text-white"
-                                        >
-                                            Reportes
-                                        </NavLink>
-                                        <NavLink
-                                            href="#"
-                                            className="text-white/80 hover:text-white"
-                                        >
-                                            Citas
-                                        </NavLink>
-                                    </>
-                                )}
-                            </div>
+                            {barbershop?.logo ? (
+                                <img 
+                                    src={barbershop.logo.startsWith('http') ? barbershop.logo : `/storage/${barbershop.logo}`}
+                                    alt={barbershop?.name || 'Barbería'}
+                                    className="h-10 w-10 rounded-full object-cover border border-white/20"
+                                />
+                            ) : (
+                                <div className="h-10 w-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
+                                    <span className="text-white text-lg">💈</span>
+                                </div>
+                            )}
+                            <span className="text-lg font-bold text-white tracking-wider">
+                                {barbershop?.name || 'BARBERSHOP'}
+                            </span>
                         </div>
 
-                        <div className="hidden sm:ms-6 sm:flex sm:items-center">
-                            <div className="relative ms-3">
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center rounded-md border border-white/20 bg-white/5 px-3 py-2 text-sm font-medium leading-4 text-white transition duration-150 ease-in-out hover:bg-white/10 focus:outline-none"
-                                            >
-                                                {user.name}
-
-                                                <svg
-                                                    className="-me-0.5 ms-2 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </Dropdown.Trigger>
-
-                                    <Dropdown.Content>
-                                        <Dropdown.Link
-                                            href={route('profile.edit')}
-                                        >
-                                            Perfil
-                                        </Dropdown.Link>
-                                        <Dropdown.Link
-                                            href={route('logout')}
-                                            method="post"
-                                            as="button"
-                                        >
-                                            Cerrar sesión
-                                        </Dropdown.Link>
-                                    </Dropdown.Content>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <div className="-me-2 flex items-center sm:hidden">
-                            <button
-                                onClick={() => setShowingNavigationDropdown(!showingNavigationDropdown)}
-                                className="sm:hidden inline-flex items-center justify-center p-2 rounded-md focus:outline-none"
-                                aria-controls="mobile-menu"
-                                aria-expanded={showingNavigationDropdown}
-                                style={{ color: accentColor }}
+                        {/* Botón hamburguesa a la derecha */}
+                        <button
+                            onClick={() => setShowingSideMenu(!showingSideMenu)}
+                            className="inline-flex items-center justify-center p-2 rounded-md focus:outline-none transition-colors hover:bg-white/10"
+                            style={{ color: accentColor }}
+                        >
+                            <svg
+                                className="h-6 w-6"
+                                stroke="currentColor"
+                                fill="none"
+                                viewBox="0 0 24 24"
                             >
-                                <svg
-                                    className="h-6 w-6"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    style={{ color: accentColor }}
-                                >
-                                    <path
-                                        className={
-                                            !showingNavigationDropdown
-                                                ? 'inline-flex'
-                                                : 'hidden'
-                                        }
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={
-                                            showingNavigationDropdown
-                                                ? 'inline-flex'
-                                                : 'hidden'
-                                        }
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
+                                <path
+                                    className={!showingSideMenu ? 'inline-flex' : 'hidden'}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                                <path
+                                    className={showingSideMenu ? 'inline-flex' : 'hidden'}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </nav>
 
             {/* Overlay cuando el menú está abierto */}
-            {showingNavigationDropdown && (
+            {showingSideMenu && (
                 <div 
-                    className="fixed inset-0 bg-black/60 backdrop-blur-sm sm:hidden z-[60]"
-                    onClick={() => setShowingNavigationDropdown(false)}
+                    className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+                    onClick={() => setShowingSideMenu(false)}
                 />
             )}
 
-            {/* Menu hamburguesa móvil - slide desde derecha ocupando mitad de pantalla */}
+            {/* Menu lateral - slide desde derecha a izquierda */}
             <div 
                 className={`
-                    fixed top-0 bottom-0 right-0 w-1/2 transform transition-transform duration-300 ease-in-out
-                    ${showingNavigationDropdown ? 'translate-x-0' : 'translate-x-full'}
-                    sm:hidden bg-black/80 backdrop-blur-xl border-l border-white/5 shadow-2xl shadow-black/50 z-[70]
+                    fixed top-0 bottom-0 right-0 w-80 transform transition-transform duration-300 ease-in-out
+                    ${showingSideMenu ? 'translate-x-0' : 'translate-x-full'}
+                    bg-black/95 backdrop-blur-xl border-l border-white/10 shadow-2xl shadow-black/50 z-50
                 `}
-                style={{ borderLeft: `2px solid ${accentColor}` }}
             >
-                <div className="flex flex-col h-full overflow-y-auto">
-                    {/* Header del menú con título y botón cerrar */}
-                    <div className="flex items-center justify-between px-4 py-4 border-b border-white/10">
+                <div className="flex flex-col h-full">
+                    {/* Header del menú */}
+                    <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
                         <h3 className="text-lg font-bold text-white uppercase tracking-wider">Menú</h3>
                         <button
-                            onClick={() => setShowingNavigationDropdown(false)}
+                            onClick={() => setShowingSideMenu(false)}
                             className="transition-colors p-2 hover:bg-white/10 rounded-lg"
                             style={{ color: accentColor }}
                         >
@@ -266,169 +98,137 @@ export default function AuthenticatedLayout({ header, children }) {
                         </button>
                     </div>
 
-                    <div className="space-y-1 px-2 pt-2 flex-1">
-                        <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
-                            className="text-white/80 hover:text-white transition-colors"
-                        >
-                            Panel principal
-                        </ResponsiveNavLink>
-                        
-                        {user.role === 'admin' && (
-                            <>
-                                <ResponsiveNavLink
-                                    href={route('admin.barbers.index')}
-                                    active={route().current('admin.barbers.*')}
-                                    className="text-white/80 hover:text-white transition-colors"
-                                >
-                                    Barberos
-                                </ResponsiveNavLink>
-                                <ResponsiveNavLink
-                                    href={route('admin.services.index')}
-                                    active={route().current('admin.services.*')}
-                                    className="text-white/80 hover:text-white transition-colors"
-                                >
-                                    Servicios
-                                </ResponsiveNavLink>
-                                <ResponsiveNavLink
-                                    href={route('admin.payment-methods.index')}
-                                    active={route().current('admin.payment-methods.*')}
-                                    className="text-white/80 hover:text-white transition-colors"
-                                >
-                                    Métodos de Pago
-                                </ResponsiveNavLink>
-                                <ResponsiveNavLink
-                                    href={route('admin.my-cuts.index')}
-                                    active={route().current('admin.my-cuts.*')}
-                                    className="text-white/80 hover:text-white transition-colors"
-                                >
-                                    Mi Rendimiento
-                                </ResponsiveNavLink>
-                                <ResponsiveNavLink
-                                    href={route('admin.cash-register.index')}
-                                    active={route().current('admin.cash-register.*')}
-                                    className="text-white/80 hover:text-white transition-colors"
-                                >
-                                    Caja
-                                </ResponsiveNavLink>
-                                <ResponsiveNavLink
-                                    href={route('admin.settings.index')}
-                                    active={route().current('admin.settings.*')}
-                                    className="text-white/80 hover:text-white transition-colors"
-                                >
-                                    Configuración
-                                </ResponsiveNavLink>
-                                <ResponsiveNavLink
-                                    href={route('admin.customization.index')}
-                                    active={route().current('admin.customization.*')}
-                                    className="text-white/80 hover:text-white transition-colors"
-                                >
-                                    Personalización
-                                </ResponsiveNavLink>
-                            </>
-                        )}
-                        
-                        {user.role === 'barber' && (
-                            <>
-                                <ResponsiveNavLink
-                                    href={route('barber.cuts.index')}
-                                    active={route().current('barber.cuts.*')}
-                                    className="text-white/80 hover:text-white transition-colors"
-                                >
-                                    Mis Cortes
-                                </ResponsiveNavLink>
-                                <ResponsiveNavLink
-                                    href={route('barber.settings.index')}
-                                    active={route().current('barber.settings.*')}
-                                    className="text-white/80 hover:text-white transition-colors"
-                                >
-                                    Configuración
-                                </ResponsiveNavLink>
-                                
-                                {/* Sección Personalización */}
-                                <div className="border-t border-white/10 pt-2 mt-2">
-                                    <div className="px-3 py-2 text-xs font-semibold text-white/40 uppercase tracking-wider">
-                                        Personalización
-                                    </div>
-                                    <ResponsiveNavLink
-                                        href={route('barber.settings.index')}
-                                        className="text-white/80 hover:text-white transition-colors"
+                    {/* Contenido del menú */}
+                    <div className="flex-1 overflow-y-auto py-4">
+                        <div className="space-y-1 px-3">
+                            <Link
+                                href={route('dashboard')}
+                                className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                                    route().current('dashboard')
+                                        ? 'bg-white/10 text-white border-l-4'
+                                        : 'text-white/70 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
+                                }`}
+                                style={route().current('dashboard') ? { borderLeftColor: accentColor } : {}}
+                            >
+                                Panel principal
+                            </Link>
+                            
+                            {user.role === 'admin' && (
+                                <>
+                                    <Link
+                                        href={route('admin.barbers.index')}
+                                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                                            route().current('admin.barbers.*')
+                                                ? 'bg-white/10 text-white border-l-4'
+                                                : 'text-white/70 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
+                                        }`}
+                                        style={route().current('admin.barbers.*') ? { borderLeftColor: accentColor } : {}}
                                     >
-                                        Mi Perfil
-                                    </ResponsiveNavLink>
-                                </div>
-
-                                {/* Otras secciones */}
-                                <div className="border-t border-white/10 pt-2 mt-2">
-                                    <ResponsiveNavLink
-                                        href="#"
-                                        className="text-white/80 hover:text-white transition-colors"
+                                        Barberos
+                                    </Link>
+                                    <Link
+                                        href={route('admin.services.index')}
+                                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                                            route().current('admin.services.*')
+                                                ? 'bg-white/10 text-white border-l-4'
+                                                : 'text-white/70 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
+                                        }`}
+                                        style={route().current('admin.services.*') ? { borderLeftColor: accentColor } : {}}
+                                    >
+                                        Servicios
+                                    </Link>
+                                    <Link
+                                        href={route('admin.payment-methods.index')}
+                                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                                            route().current('admin.payment-methods.*')
+                                                ? 'bg-white/10 text-white border-l-4'
+                                                : 'text-white/70 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
+                                        }`}
+                                        style={route().current('admin.payment-methods.*') ? { borderLeftColor: accentColor } : {}}
+                                    >
+                                        Métodos de Pago
+                                    </Link>
+                                    <Link
+                                        href={route('admin.my-cuts.index')}
+                                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                                            route().current('admin.my-cuts.*')
+                                                ? 'bg-white/10 text-white border-l-4'
+                                                : 'text-white/70 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
+                                        }`}
+                                        style={route().current('admin.my-cuts.*') ? { borderLeftColor: accentColor } : {}}
+                                    >
+                                        Mi Rendimiento
+                                    </Link>
+                                    <Link
+                                        href={route('admin.cash-register.index')}
+                                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                                            route().current('admin.cash-register.*')
+                                                ? 'bg-white/10 text-white border-l-4'
+                                                : 'text-white/70 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
+                                        }`}
+                                        style={route().current('admin.cash-register.*') ? { borderLeftColor: accentColor } : {}}
                                     >
                                         Caja
-                                    </ResponsiveNavLink>
-                                    <ResponsiveNavLink
-                                        href="#"
-                                        className="text-white/80 hover:text-white transition-colors"
+                                    </Link>
+                                    <Link
+                                        href={route('admin.settings.index')}
+                                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                                            route().current('admin.settings.*')
+                                                ? 'bg-white/10 text-white border-l-4'
+                                                : 'text-white/70 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
+                                        }`}
+                                        style={route().current('admin.settings.*') ? { borderLeftColor: accentColor } : {}}
                                     >
-                                        Reportes
-                                    </ResponsiveNavLink>
-                                    <ResponsiveNavLink
-                                        href="#"
-                                        className="text-white/80 hover:text-white transition-colors"
+                                        Configuración
+                                    </Link>
+                                </>
+                            )}
+                            
+                            {user.role === 'barber' && (
+                                <>
+                                    <Link
+                                        href={route('barber.cuts.index')}
+                                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                                            route().current('barber.cuts.*')
+                                                ? 'bg-white/10 text-white border-l-4'
+                                                : 'text-white/70 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
+                                        }`}
+                                        style={route().current('barber.cuts.*') ? { borderLeftColor: accentColor } : {}}
                                     >
-                                        Citas
-                                    </ResponsiveNavLink>
-                                </div>
-                            </>
-                        )}
+                                        Mis Cortes
+                                    </Link>
+                                    <Link
+                                        href={route('barber.settings.index')}
+                                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                                            route().current('barber.settings.*')
+                                                ? 'bg-white/10 text-white border-l-4'
+                                                : 'text-white/70 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
+                                        }`}
+                                        style={route().current('barber.settings.*') ? { borderLeftColor: accentColor } : {}}
+                                    >
+                                        Configuración
+                                    </Link>
+                                </>
+                            )}
+                        </div>
                     </div>
 
-                    {/* Cambiar de barbería - solo admin */}
-                    {user.role === 'admin' && barbershop && (
-                        <div className="border-t border-white/10 px-2 pt-3">
-                            <div className="mb-2">
-                                <div className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-2 px-3">
-                                    Barbería Actual
-                                </div>
-                                <div className="flex items-center gap-2 mb-3 px-3">
-                                    {barbershop.logo ? (
-                                        <img 
-                                            src={barbershop.logo.startsWith('http') ? barbershop.logo : `/storage/${barbershop.logo}`}
-                                            alt={barbershop.name}
-                                            className="h-8 w-8 rounded-full object-cover border border-white/20"
-                                        />
-                                    ) : (
-                                        <div className="h-8 w-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
-                                            <span className="text-white text-sm">💈</span>
-                                        </div>
-                                    )}
-                                    <span className="text-sm font-medium text-white">
-                                        {barbershop.name}
-                                    </span>
-                                </div>
-                            </div>
-                            <ResponsiveNavLink
-                                href={route('admin.barbershops.index')}
-                                className="text-white/80 hover:text-white transition-colors"
-                            >
-                                Cambiar de Barbería
-                            </ResponsiveNavLink>
-                        </div>
-                    )}
-
-                    <div className="px-2 pb-4 mt-auto">
-                        <ResponsiveNavLink href={route('profile.edit')} className="text-white/80 hover:text-white transition-colors block">
+                    {/* Footer con acciones de usuario */}
+                    <div className="border-t border-white/10 px-3 py-4 space-y-1">
+                        <Link
+                            href={route('profile.edit')}
+                            className="flex items-center px-4 py-3 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all"
+                        >
                             Perfil
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            method="post"
+                        </Link>
+                        <Link
                             href={route('logout')}
+                            method="post"
                             as="button"
-                            className="text-white/80 hover:text-white transition-colors"
+                            className="w-full text-left flex items-center px-4 py-3 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all"
                         >
                             Cerrar sesión
-                        </ResponsiveNavLink>
+                        </Link>
                     </div>
                 </div>
             </div>
