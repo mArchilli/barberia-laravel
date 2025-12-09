@@ -1,12 +1,14 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import RegisterCutModal from '@/Components/RegisterCutModal';
 import { useState, useEffect } from 'react';
 
-export default function Dashboard({ auth, barbershop, services, paymentMethods, cutsToday, revenueToday, recentCuts, accentColor }) {
+export default function Dashboard({ auth, services, paymentMethods, cutsToday, revenueToday, recentCuts }) {
     const [showBalance, setShowBalance] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [currentTime, setCurrentTime] = useState(new Date());
+    const { barbershop } = usePage().props;
+    const accentColor = barbershop?.accent_color || '#ffffff';
     
     // Actualizar reloj cada segundo
     useEffect(() => {

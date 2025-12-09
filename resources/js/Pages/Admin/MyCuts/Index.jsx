@@ -1,10 +1,12 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import RegisterCutModal from '@/Components/RegisterCutModal';
 import { useState } from 'react';
 
 export default function Index({ auth, cuts, stats, services, paymentMethods }) {
     const [showModal, setShowModal] = useState(false);
+    const { barbershop } = usePage().props;
+    const accentColor = barbershop?.accent_color || '#ffffff';
 
     const formatDateTime = (dateString) => {
         const date = new Date(dateString);
@@ -17,52 +19,35 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="Mi Rendimiento" />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    {/* Botón volver */}
-                    <a
-                        href={route('admin.dashboard')}
-                        className="inline-flex items-center gap-2 text-white/70 hover:text-white transition mb-6"
-                    >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                        Volver al Dashboard
-                    </a>
-
+            <div className="min-h-screen bg-black pt-6 pb-12">
+                <div className="mx-auto max-w-7xl px-6">
                     {/* Header */}
-                    <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                        <div>
-                            <h1 className="text-3xl font-bold text-white">
-                                Mi Rendimiento
-                            </h1>
-                            <p className="mt-2 text-white/70">
-                                Historial de servicios que he realizado
-                            </p>
-                        </div>
-                        <button
-                            onClick={() => setShowModal(true)}
-                            className="px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition rounded-xl"
-                        >
-                            + Registrar Corte
-                        </button>
+                    <div className="mb-6">
+                        <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                            Mi Rendimiento
+                        </h1>
+                        <p className="text-white/60 text-sm">
+                            Historial de servicios que he realizado
+                        </p>
                     </div>
 
                     {/* Estadísticas */}
                     <div className="grid md:grid-cols-3 gap-3 mb-3">
                         {/* Hoy */}
                         <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
-                            <div className="flex items-center justify-between mb-2">
-                                <h3 className="text-white/70 font-semibold">Hoy</h3>
-                                <span className="text-2xl">📅</span>
+                            <div className="flex items-center justify-between mb-4">
+                                <h3 className="text-white/60 text-sm">Hoy</h3>
+                                <svg className="w-8 h-8" fill="none" stroke={accentColor} viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
                             </div>
-                            <div className="text-3xl font-bold text-white mb-1">
+                            <div className="text-4xl font-bold text-white mb-1">
                                 {stats.cuts_today}
                             </div>
-                            <div className="text-white/50 text-sm">
+                            <div className="text-white/50 text-sm mb-4">
                                 Cortes realizados
                             </div>
-                            <div className="text-xl font-semibold text-white mt-3">
+                            <div className="text-2xl font-semibold text-white mb-1">
                                 ${parseFloat(stats.earnings_today).toFixed(2)}
                             </div>
                             <div className="text-white/50 text-sm">
@@ -72,17 +57,19 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
 
                         {/* Este Mes */}
                         <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
-                            <div className="flex items-center justify-between mb-2">
-                                <h3 className="text-white/70 font-semibold">Este Mes</h3>
-                                <span className="text-2xl">📊</span>
+                            <div className="flex items-center justify-between mb-4">
+                                <h3 className="text-white/60 text-sm">Este Mes</h3>
+                                <svg className="w-8 h-8" fill="none" stroke={accentColor} viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
                             </div>
-                            <div className="text-3xl font-bold text-white mb-1">
+                            <div className="text-4xl font-bold text-white mb-1">
                                 {stats.cuts_this_month}
                             </div>
-                            <div className="text-white/50 text-sm">
+                            <div className="text-white/50 text-sm mb-4">
                                 Cortes realizados
                             </div>
-                            <div className="text-xl font-semibold text-white mt-3">
+                            <div className="text-2xl font-semibold text-white mb-1">
                                 ${parseFloat(stats.earnings_this_month).toFixed(2)}
                             </div>
                             <div className="text-white/50 text-sm">
@@ -92,17 +79,19 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
 
                         {/* Total */}
                         <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
-                            <div className="flex items-center justify-between mb-2">
-                                <h3 className="text-white/70 font-semibold">Total</h3>
-                                <span className="text-2xl">💰</span>
+                            <div className="flex items-center justify-between mb-4">
+                                <h3 className="text-white/60 text-sm">Total</h3>
+                                <svg className="w-8 h-8" fill="none" stroke={accentColor} viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
                             </div>
-                            <div className="text-3xl font-bold text-white mb-1">
+                            <div className="text-4xl font-bold text-white mb-1">
                                 {stats.total_cuts}
                             </div>
-                            <div className="text-white/50 text-sm">
+                            <div className="text-white/50 text-sm mb-4">
                                 Cortes realizados
                             </div>
-                            <div className="text-xl font-semibold text-white mt-3">
+                            <div className="text-2xl font-semibold text-white mb-1">
                                 ${parseFloat(stats.total_earnings).toFixed(2)}
                             </div>
                             <div className="text-white/50 text-sm">
@@ -111,9 +100,22 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
                         </div>
                     </div>
 
+                    {/* Botón Registrar Servicio */}
+                    <button
+                        onClick={() => setShowModal(true)}
+                        className="w-full mb-3 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-3">
+                        <svg className="w-6 h-6" fill="none" stroke={accentColor} viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span className="text-xl font-bold text-white">Registrar Servicio</span>
+                    </button>
+
                     {/* Tabla de Cortes */}
                     <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden">
-                        <div className="p-6 border-b border-white/10">
+                        <div className="p-6 border-b border-white/10 flex items-center gap-3">
+                            <svg className="w-6 h-6" fill="none" stroke={accentColor} viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
                             <h2 className="text-xl font-bold text-white">Historial de Cortes</h2>
                         </div>
                         
@@ -149,7 +151,11 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
                             </div>
                         ) : (
                             <div className="p-12 text-center">
-                                <div className="text-6xl mb-4">✂️</div>
+                                <div className="mb-6 flex justify-center">
+                                    <svg className="w-20 h-20" fill="none" stroke={accentColor} viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z" />
+                                    </svg>
+                                </div>
                                 <h3 className="text-xl font-semibold text-white mb-2">
                                     No hay cortes registrados
                                 </h3>
@@ -158,8 +164,15 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
                                 </p>
                                 <button
                                     onClick={() => setShowModal(true)}
-                                    className="inline-block px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition rounded-xl"
+                                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 transition-colors font-medium text-white"
+                                    style={{
+                                        borderColor: accentColor,
+                                        backgroundColor: 'transparent'
+                                    }}
                                 >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                    </svg>
                                     Registrar Primer Corte
                                 </button>
                             </div>

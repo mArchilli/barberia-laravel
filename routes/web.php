@@ -41,7 +41,6 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin/barbershops
 // Dashboard Admin (con middleware de barbershop)
 Route::middleware(['auth', 'verified', 'role:admin', 'admin.barbershop'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
-        $barbershop = null;
         $services = collect();
         $paymentMethods = collect();
         $cutsToday = 0;
@@ -49,7 +48,6 @@ Route::middleware(['auth', 'verified', 'role:admin', 'admin.barbershop'])->prefi
         
         if (session('selected_barbershop_id')) {
             $barbershopId = session('selected_barbershop_id');
-            $barbershop = Barbershop::find($barbershopId);
             
             // Obtener servicios y métodos de pago para la modal
             $services = \App\Models\Service::where('barbershop_id', $barbershopId)
@@ -104,13 +102,11 @@ Route::middleware(['auth', 'verified', 'role:admin', 'admin.barbershop'])->prefi
         }
         
         return Inertia::render('Dashboard', [
-            'barbershop' => $barbershop,
             'services' => $services,
             'paymentMethods' => $paymentMethods,
             'cutsToday' => $cutsToday,
             'revenueToday' => $revenueToday,
             'recentCuts' => $recentCuts ?? collect(),
-            'accentColor' => $barbershop?->accent_color ?? '#ffffff',
         ]);
     })->name('dashboard');
     

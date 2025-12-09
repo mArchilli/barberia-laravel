@@ -29,11 +29,24 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $barbershopId = session('selected_barbershop_id');
+        $barbershop = null;
+        
+        if ($barbershopId) {
+            $barbershop = \App\Models\Barbershop::find($barbershopId);
+        }
+        
         return [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
             ],
+            'barbershop' => $barbershop ? [
+                'id' => $barbershop->id,
+                'name' => $barbershop->name,
+                'logo' => $barbershop->logo,
+                'accent_color' => $barbershop->accent_color ?? '#ffffff',
+            ] : null,
         ];
     }
 }

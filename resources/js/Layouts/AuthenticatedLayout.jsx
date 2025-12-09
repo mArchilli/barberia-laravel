@@ -181,6 +181,17 @@ export default function AuthenticatedLayout({ header, children }) {
                                     >
                                         Configuración
                                     </Link>
+                                    <Link
+                                        href={route('admin.customization.index')}
+                                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                                            route().current('admin.customization.*')
+                                                ? 'bg-white/10 text-white border-l-4'
+                                                : 'text-white/70 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
+                                        }`}
+                                        style={route().current('admin.customization.*') ? { borderLeftColor: accentColor } : {}}
+                                    >
+                                        Personalización
+                                    </Link>
                                 </>
                             )}
                             
@@ -207,6 +218,17 @@ export default function AuthenticatedLayout({ header, children }) {
                                         style={route().current('barber.settings.*') ? { borderLeftColor: accentColor } : {}}
                                     >
                                         Configuración
+                                    </Link>
+                                    <Link
+                                        href={route('barber.customization.index')}
+                                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                                            route().current('barber.customization.*')
+                                                ? 'bg-white/10 text-white border-l-4'
+                                                : 'text-white/70 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
+                                        }`}
+                                        style={route().current('barber.customization.*') ? { borderLeftColor: accentColor } : {}}
+                                    >
+                                        Personalización
                                     </Link>
                                 </>
                             )}
