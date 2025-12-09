@@ -17,7 +17,6 @@ class BarberController extends Controller
     public function index()
     {
         $barbershopId = session('selected_barbershop_id');
-        $barbershop = Barbershop::findOrFail($barbershopId);
         
         // Obtener todos los barberos vinculados a esta barbería + el dueño
         $barbers = User::where('barbershop_id', $barbershopId)
@@ -28,7 +27,6 @@ class BarberController extends Controller
         $admin = Auth::user();
 
         return Inertia::render('Admin/Barbers/Index', [
-            'barbershop' => $barbershop,
             'barbers' => $barbers,
             'admin' => $admin,
         ]);

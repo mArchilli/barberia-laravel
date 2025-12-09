@@ -15,14 +15,12 @@ class PaymentMethodController extends Controller
     public function index()
     {
         $barbershopId = session('selected_barbershop_id');
-        $barbershop = Barbershop::findOrFail($barbershopId);
         
         $paymentMethods = PaymentMethod::where('barbershop_id', $barbershopId)
             ->orderBy('name')
             ->get();
 
         return Inertia::render('Admin/PaymentMethods/Index', [
-            'barbershop' => $barbershop,
             'paymentMethods' => $paymentMethods,
         ]);
     }

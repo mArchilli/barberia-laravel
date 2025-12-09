@@ -32,7 +32,6 @@ class SettingsController extends Controller
         }
 
         return Inertia::render('Admin/Settings/Index', [
-            'barbershop' => $barbershop,
             'schedulesByDay' => $schedulesByDay,
         ]);
     }

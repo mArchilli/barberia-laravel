@@ -15,14 +15,12 @@ class ServiceController extends Controller
     public function index()
     {
         $barbershopId = session('selected_barbershop_id');
-        $barbershop = Barbershop::findOrFail($barbershopId);
         
         $services = Service::where('barbershop_id', $barbershopId)
             ->orderBy('name')
             ->get();
 
         return Inertia::render('Admin/Services/Index', [
-            'barbershop' => $barbershop,
             'services' => $services,
         ]);
     }

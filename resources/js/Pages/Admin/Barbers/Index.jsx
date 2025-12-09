@@ -1,11 +1,13 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import ConfirmModal from '@/Components/ConfirmModal';
 import { useState } from 'react';
 
-export default function Index({ auth, barbershop, barbers, admin }) {
+export default function Index({ auth, barbers, admin }) {
     const [showUnlinkModal, setShowUnlinkModal] = useState(false);
     const [barberToUnlink, setBarberToUnlink] = useState(null);
+    const { barbershop } = usePage().props;
+    const accentColor = barbershop?.accent_color || '#ffffff';
 
     const handleUnlinkClick = (barber) => {
         setBarberToUnlink(barber);
@@ -24,36 +26,27 @@ export default function Index({ auth, barbershop, barbers, admin }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="Gestión de Barberos" />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    {/* Botón volver */}
-                    <Link
-                        href={route('admin.dashboard')}
-                        className="inline-flex items-center gap-2 text-white/70 hover:text-white transition mb-6"
-                    >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                        Volver al Dashboard
-                    </Link>
-
+            <div className="min-h-screen bg-black pt-6 pb-12">
+                <div className="mx-auto max-w-7xl px-6">
                     {/* Header */}
-                    <div className="mb-8 flex items-center justify-between">
-                        <div>
-                            <h1 className="text-3xl font-bold text-white">
-                                Barberos de {barbershop.name}
-                            </h1>
-                            <p className="mt-2 text-white/70">
-                                Gestiona el equipo de barberos de tu barbería
-                            </p>
-                        </div>
-                        <Link
-                            href={route('admin.barbers.create')}
-                            className="px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition rounded-xl"
-                        >
-                            + Agregar Barbero
-                        </Link>
+                    <div className="mb-6">
+                        <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                            Barberos de {barbershop?.name}
+                        </h1>
+                        <p className="text-white/60 text-sm">
+                            Gestiona el equipo de barberos de tu barbería
+                        </p>
                     </div>
+
+                    {/* Botón Agregar Barbero */}
+                    <Link
+                        href={route('admin.barbers.create')}
+                        className="w-full mb-3 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-3">
+                        <svg className="w-6 h-6" fill="none" stroke={accentColor} viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span className="text-xl font-bold text-white">Agregar Barbero</span>
+                    </Link>
 
                     {/* Lista de Barberos */}
                     <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
@@ -61,8 +54,10 @@ export default function Index({ auth, barbershop, barbers, admin }) {
                         <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
                             <div className="flex items-start justify-between mb-4">
                                 <div className="flex items-center space-x-3">
-                                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                                        <span className="text-xl">👤</span>
+                                    <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: `${accentColor}20` }}>
+                                        <svg className="w-6 h-6" fill="none" stroke={accentColor} viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
                                     </div>
                                     <div>
                                         <h3 className="text-lg font-bold text-white">
@@ -71,7 +66,14 @@ export default function Index({ auth, barbershop, barbers, admin }) {
                                         <p className="text-sm text-white/50">Dueño</p>
                                     </div>
                                 </div>
-                                <span className="px-3 py-1 bg-yellow-500/20 border border-yellow-500/30 text-yellow-400 text-xs font-semibold rounded-lg">
+                                <span 
+                                    className="px-3 py-1 border text-xs font-semibold rounded-lg"
+                                    style={{ 
+                                        backgroundColor: `${accentColor}20`,
+                                        borderColor: `${accentColor}40`,
+                                        color: accentColor
+                                    }}
+                                >
                                     ADMIN
                                 </span>
                             </div>
@@ -88,8 +90,10 @@ export default function Index({ auth, barbershop, barbers, admin }) {
                                 <div key={barber.id} className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
                                     <div className="flex items-start justify-between mb-4">
                                         <div className="flex items-center space-x-3">
-                                            <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                                                <span className="text-xl">✂️</span>
+                                            <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center">
+                                                <svg className="w-6 h-6" fill="none" stroke={accentColor} viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z" />
+                                                </svg>
                                             </div>
                                             <div>
                                                 <h3 className="text-lg font-bold text-white">
@@ -117,7 +121,11 @@ export default function Index({ auth, barbershop, barbers, admin }) {
                             ))
                         ) : (
                             <div className="col-span-full rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-12 text-center">
-                                <div className="text-6xl mb-4">✂️</div>
+                                <div className="mb-6 flex justify-center">
+                                    <svg className="w-20 h-20" fill="none" stroke={accentColor} viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z" />
+                                    </svg>
+                                </div>
                                 <h3 className="text-xl font-bold text-white mb-2">
                                     No hay barberos vinculados
                                 </h3>
@@ -126,8 +134,15 @@ export default function Index({ auth, barbershop, barbers, admin }) {
                                 </p>
                                 <Link
                                     href={route('admin.barbers.create')}
-                                    className="inline-block px-6 py-3 bg-white text-black font-bold hover:bg-white/90 transition rounded-xl"
+                                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border-2 transition-colors font-medium text-white"
+                                    style={{
+                                        borderColor: accentColor,
+                                        backgroundColor: 'transparent'
+                                    }}
                                 >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                    </svg>
                                     Agregar Primer Barbero
                                 </Link>
                             </div>
