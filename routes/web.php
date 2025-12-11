@@ -144,6 +144,14 @@ Route::middleware(['auth', 'verified', 'role:admin', 'admin.barbershop'])->prefi
     // Ruta de caja
     Route::get('/cash-register', [\App\Http\Controllers\CashRegisterController::class, 'index'])->name('cash-register.index');
     
+    // Rutas de productos/stock
+    Route::prefix('products')->name('products.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('index');
+        Route::post('/', [\App\Http\Controllers\ProductController::class, 'store'])->name('store');
+        Route::post('/{product}/update-quantity', [\App\Http\Controllers\ProductController::class, 'updateQuantity'])->name('update-quantity');
+        Route::delete('/{product}', [\App\Http\Controllers\ProductController::class, 'destroy'])->name('destroy');
+    });
+    
     // Rutas de mi rendimiento (cortes del admin)
     Route::prefix('my-cuts')->name('my-cuts.')->group(function () {
         Route::get('/', [\App\Http\Controllers\Admin\CutController::class, 'index'])->name('index');

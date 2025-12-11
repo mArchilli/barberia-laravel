@@ -30,12 +30,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        $barbershopId = session('selected_barbershop_id');
-        $barbershop = Barbershop::findOrFail($barbershopId);
-
-        return Inertia::render('Admin/Services/Create', [
-            'barbershop' => $barbershop,
-        ]);
+        return Inertia::render('Admin/Services/Create');
     }
 
     /**

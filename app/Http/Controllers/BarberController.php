@@ -38,7 +38,6 @@ class BarberController extends Controller
     public function create()
     {
         $barbershopId = session('selected_barbershop_id');
-        $barbershop = Barbershop::findOrFail($barbershopId);
         
         // Obtener todos los barberos que NO están vinculados a esta barbería
         $availableBarbers = User::where('role', User::ROLE_BARBER)
@@ -49,7 +48,6 @@ class BarberController extends Controller
             ->get();
 
         return Inertia::render('Admin/Barbers/Create', [
-            'barbershop' => $barbershop,
             'availableBarbers' => $availableBarbers,
         ]);
     }
@@ -59,12 +57,7 @@ class BarberController extends Controller
      */
     public function createNew()
     {
-        $barbershopId = session('selected_barbershop_id');
-        $barbershop = Barbershop::findOrFail($barbershopId);
-
-        return Inertia::render('Admin/Barbers/CreateNew', [
-            'barbershop' => $barbershop,
-        ]);
+        return Inertia::render('Admin/Barbers/CreateNew');
     }
 
     /**

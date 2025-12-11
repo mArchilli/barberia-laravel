@@ -1,8 +1,10 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import ToggleSwitch from '@/Components/ToggleSwitch';
 
-export default function Form({ auth, barbershop, paymentMethod }) {
+export default function Form({ auth, paymentMethod }) {
+    const { barbershop } = usePage().props;
+    const accentColor = barbershop?.accent_color || '#ffffff';
     const isEditing = paymentMethod !== null;
 
     const { data, setData, post, put, processing, errors } = useForm({
@@ -23,10 +25,10 @@ export default function Form({ auth, barbershop, paymentMethod }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title={isEditing ? 'Editar Método de Pago' : 'Crear Método de Pago'} />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-3xl">
                     {/* Header */}
-                    <div className="mb-8">
+                    <div className="mb-6 sm:mb-8">
                         <Link
                             href={route('admin.payment-methods.index')}
                             className="inline-flex items-center text-white/70 hover:text-white transition mb-4"
@@ -36,19 +38,19 @@ export default function Form({ auth, barbershop, paymentMethod }) {
                             </svg>
                             Volver a Métodos de Pago
                         </Link>
-                        <h1 className="text-3xl font-bold text-white">
+                        <h1 className="text-2xl sm:text-3xl font-bold text-white">
                             {isEditing ? 'Editar Método de Pago' : 'Añadir Método de Pago'}
                         </h1>
-                        <p className="mt-2 text-white/70">
+                        <p className="mt-2 text-sm sm:text-base text-white/70">
                             {isEditing 
                                 ? `Modifica la información del método de pago` 
-                                : `Añade un nuevo método de pago a ${barbershop.name}`
+                                : `Añade un nuevo método de pago a ${barbershop?.name || 'tu barbería'}`
                             }
                         </p>
                     </div>
 
                     {/* Formulario */}
-                    <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8">
+                    <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 sm:p-8">
                         {/* Nombre */ }
                         <div className="mb-6">
                             <label htmlFor="name" className="block text-white font-semibold mb-2">
@@ -59,7 +61,7 @@ export default function Form({ auth, barbershop, paymentMethod }) {
                                 type="text"
                                 value={data.name}
                                 onChange={(e) => setData('name', e.target.value)}
-                                className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                                className="w-full px-4 py-3 rounded-lg bg-zinc-900 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white/40 transition"
                                 placeholder="Ej: Efectivo, Tarjeta de Crédito, Transferencia"
                             />
                             {errors.name && (
@@ -81,7 +83,7 @@ export default function Form({ auth, barbershop, paymentMethod }) {
                         </div>
 
                         {/* Botones */}
-                        <div className="flex gap-4">
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                             <Link
                                 href={route('admin.payment-methods.index')}
                                 className="flex-1 py-3 rounded-xl bg-white/10 text-white text-center font-semibold border border-white/20 hover:bg-white/20 transition"
@@ -91,7 +93,8 @@ export default function Form({ auth, barbershop, paymentMethod }) {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="flex-1 py-3 rounded-xl bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                style={{ backgroundColor: processing ? '#888' : accentColor }}
+                                className="flex-1 py-3 rounded-xl text-black font-bold hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {processing 
                                     ? (isEditing ? 'Guardando...' : 'Creando...') 

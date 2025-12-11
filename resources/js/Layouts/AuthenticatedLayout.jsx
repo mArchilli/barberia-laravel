@@ -171,6 +171,17 @@ export default function AuthenticatedLayout({ header, children }) {
                                         Caja
                                     </Link>
                                     <Link
+                                        href={route('admin.products.index')}
+                                        className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                                            route().current('admin.products.*')
+                                                ? 'bg-white/10 text-white border-l-4'
+                                                : 'text-white/70 hover:text-white hover:bg-white/5 border-l-4 border-transparent'
+                                        }`}
+                                        style={route().current('admin.products.*') ? { borderLeftColor: accentColor } : {}}
+                                    >
+                                        Stock
+                                    </Link>
+                                    <Link
                                         href={route('admin.settings.index')}
                                         className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all ${
                                             route().current('admin.settings.*')
@@ -251,8 +262,8 @@ export default function AuthenticatedLayout({ header, children }) {
                                 href={route('admin.barbershops.index')}
                                 className="flex items-center px-4 py-3 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all"
                             >
-                                <svg className="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/>
+                                <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
                                 </svg>
                                 Cambiar de Barbería
                             </Link>

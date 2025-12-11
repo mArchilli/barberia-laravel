@@ -1,8 +1,11 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import ToggleSwitch from '@/Components/ToggleSwitch';
 
-export default function Create({ auth, barbershop }) {
+export default function Create({ auth }) {
+    const { barbershop } = usePage().props;
+    const accentColor = barbershop?.accent_color || '#ffffff';
+    
     const { data, setData, post, processing, errors } = useForm({
         name: '',
         duration: 30,
@@ -19,10 +22,10 @@ export default function Create({ auth, barbershop }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="Crear Servicio" />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="min-h-screen bg-black pt-6 pb-12">
+                <div className="mx-auto max-w-3xl px-6">
                     {/* Header */}
-                    <div className="mb-8">
+                    <div className="mb-6">
                         <Link
                             href={route('admin.services.index')}
                             className="inline-flex items-center text-white/70 hover:text-white transition mb-4"
@@ -32,16 +35,16 @@ export default function Create({ auth, barbershop }) {
                             </svg>
                             Volver a Servicios
                         </Link>
-                        <h1 className="text-3xl font-bold text-white">
+                        <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
                             Crear Nuevo Servicio
                         </h1>
-                        <p className="mt-2 text-white/70">
-                            Agrega un servicio al catálogo de {barbershop.name}
+                        <p className="text-white/60 text-sm">
+                            Agrega un servicio al catálogo de {barbershop?.name}
                         </p>
                     </div>
 
                     {/* Formulario */}
-                    <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8">
+                    <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 md:p-8">
                         {/* Nombre */}
                         <div className="mb-6">
                             <label htmlFor="name" className="block text-white font-semibold mb-2">
@@ -117,17 +120,18 @@ export default function Create({ auth, barbershop }) {
                         </div>
 
                         {/* Botones */}
-                        <div className="flex gap-4">
+                        <div className="flex flex-col sm:flex-row gap-3">
                             <Link
                                 href={route('admin.services.index')}
-                                className="flex-1 py-3 rounded-xl bg-white/10 text-white text-center font-semibold border border-white/20 hover:bg-white/20 transition"
+                                className="flex-1 py-3 rounded-xl bg-white/10 text-white text-center font-bold border border-white/20 hover:bg-white/20 transition"
                             >
                                 Cancelar
                             </Link>
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="flex-1 py-3 rounded-xl bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="flex-1 py-3 rounded-xl font-bold text-black hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                style={{ backgroundColor: accentColor }}
                             >
                                 {processing ? 'Creando...' : 'Crear Servicio'}
                             </button>

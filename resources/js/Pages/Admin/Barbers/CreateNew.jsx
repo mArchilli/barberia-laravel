@@ -1,7 +1,10 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-export default function CreateNew({ auth, barbershop }) {
+export default function CreateNew({ auth }) {
+    const { barbershop } = usePage().props;
+    const accentColor = barbershop?.accent_color || '#ffffff';
+    
     const { data, setData, post, processing, errors } = useForm({
         name: '',
         email: '',
@@ -19,10 +22,10 @@ export default function CreateNew({ auth, barbershop }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="Crear Nuevo Barbero" />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="min-h-screen bg-black pt-6 pb-12">
+                <div className="mx-auto max-w-3xl px-6">
                     {/* Header */}
-                    <div className="mb-8">
+                    <div className="mb-6">
                         <Link
                             href={route('admin.barbers.create')}
                             className="inline-flex items-center text-white/70 hover:text-white transition mb-4"
@@ -32,16 +35,16 @@ export default function CreateNew({ auth, barbershop }) {
                             </svg>
                             Volver
                         </Link>
-                        <h1 className="text-3xl font-bold text-white">
+                        <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
                             Crear Nuevo Barbero
                         </h1>
-                        <p className="mt-2 text-white/70">
-                            Crea una cuenta para un nuevo miembro del equipo de {barbershop.name}
+                        <p className="text-white/60 text-sm">
+                            Crea una cuenta para un nuevo miembro del equipo de {barbershop?.name}
                         </p>
                     </div>
 
                     {/* Formulario */}
-                    <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8">
+                    <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 md:p-8">
                         {/* Nombre */ }
                         <div className="mb-6">
                             <label htmlFor="name" className="block text-white font-semibold mb-2">
@@ -131,23 +134,29 @@ export default function CreateNew({ auth, barbershop }) {
 
                         {/* Información adicional */}
                         <div className="mb-6 p-4 rounded-lg bg-white/5 border border-white/10">
-                            <p className="text-sm text-white/70">
-                                <span className="font-semibold text-white">ℹ️ Información:</span> El barbero podrá iniciar sesión con este correo y contraseña para gestionar sus propias citas y ver su agenda personal.
-                            </p>
+                            <div className="flex items-start gap-3">
+                                <svg className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                                </svg>
+                                <p className="text-sm text-white/70">
+                                    <span className="font-semibold text-white">Información:</span> El barbero podrá iniciar sesión con este correo y contraseña para gestionar sus propias citas y ver su agenda personal.
+                                </p>
+                            </div>
                         </div>
 
                         {/* Botones */}
-                        <div className="flex gap-4">
+                        <div className="flex flex-col sm:flex-row gap-3">
                             <Link
                                 href={route('admin.barbers.create')}
-                                className="flex-1 py-3 rounded-xl bg-white/10 text-white text-center font-semibold border border-white/20 hover:bg-white/20 transition"
+                                className="flex-1 py-3 rounded-xl bg-white/10 text-white text-center font-bold border border-white/20 hover:bg-white/20 transition"
                             >
                                 Cancelar
                             </Link>
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="flex-1 py-3 rounded-xl bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="flex-1 py-3 rounded-xl font-bold text-black hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                style={{ backgroundColor: accentColor }}
                             >
                                 {processing ? 'Creando...' : 'Crear Barbero'}
                             </button>

@@ -30,11 +30,7 @@ class PaymentMethodController extends Controller
      */
     public function create()
     {
-        $barbershopId = session('selected_barbershop_id');
-        $barbershop = Barbershop::findOrFail($barbershopId);
-
         return Inertia::render('Admin/PaymentMethods/Form', [
-            'barbershop' => $barbershop,
             'paymentMethod' => null,
         ]);
     }
@@ -73,10 +69,7 @@ class PaymentMethodController extends Controller
             abort(403, 'No tienes permiso para editar este medio de pago.');
         }
 
-        $barbershop = Barbershop::findOrFail($barbershopId);
-
         return Inertia::render('Admin/PaymentMethods/Form', [
-            'barbershop' => $barbershop,
             'paymentMethod' => $paymentMethod,
         ]);
     }
