@@ -1,5 +1,6 @@
 import { Head } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { formatCurrency } from '@/utils/currency';
 import { useState } from 'react';
 import { router } from '@inertiajs/react';
 
@@ -15,10 +16,6 @@ export default function Index({ auth, barbershop, cuts, stats, revenueByPaymentM
             hour: '2-digit',
             minute: '2-digit'
         });
-    };
-
-    const formatCurrency = (amount) => {
-        return `$${Math.round(amount).toLocaleString('es-AR')}`;
     };
 
     const handleFilterChange = (type) => {

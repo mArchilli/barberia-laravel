@@ -1,4 +1,5 @@
 import { useForm } from '@inertiajs/react';
+import { formatCurrency } from '@/utils/currency';
 import { useState } from 'react';
 
 export default function RegisterCutModal({ show, onClose, services, paymentMethods, storeRoute = 'barber.cuts.store' }) {
@@ -96,7 +97,7 @@ export default function RegisterCutModal({ show, onClose, services, paymentMetho
                                 >
                                     <div className="text-white font-semibold">{service.name}</div>
                                     <div className="text-white/70 text-sm mt-1">
-                                        {service.duration} min • ${service.price}
+                                        {service.duration} min • {formatCurrency(service.price)}
                                     </div>
                                 </button>
                             ))}

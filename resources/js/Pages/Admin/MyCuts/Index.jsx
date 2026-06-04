@@ -1,6 +1,7 @@
 import { Head, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import RegisterCutModal from '@/Components/RegisterCutModal';
+import { formatCurrency } from '@/utils/currency';
 import { useState } from 'react';
 
 export default function Index({ auth, cuts, stats, services, paymentMethods }) {
@@ -48,7 +49,7 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
                                 Cortes realizados
                             </div>
                             <div className="text-2xl font-semibold text-white mb-1">
-                                ${parseFloat(stats.earnings_today).toFixed(2)}
+                                {formatCurrency(stats.earnings_today)}
                             </div>
                             <div className="text-white/50 text-sm">
                                 Dinero acumulado
@@ -70,7 +71,7 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
                                 Cortes realizados
                             </div>
                             <div className="text-2xl font-semibold text-white mb-1">
-                                ${parseFloat(stats.earnings_this_month).toFixed(2)}
+                                {formatCurrency(stats.earnings_this_month)}
                             </div>
                             <div className="text-white/50 text-sm">
                                 Dinero acumulado
@@ -92,7 +93,7 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
                                 Cortes realizados
                             </div>
                             <div className="text-2xl font-semibold text-white mb-1">
-                                ${parseFloat(stats.total_earnings).toFixed(2)}
+                                {formatCurrency(stats.total_earnings)}
                             </div>
                             <div className="text-white/50 text-sm">
                                 Dinero acumulado
@@ -142,7 +143,7 @@ export default function Index({ auth, cuts, stats, services, paymentMethods }) {
                                                 <td className="py-3 px-4 text-sm text-white/80">{cut.client_name}</td>
                                                 <td className="py-3 px-4 text-sm text-white font-medium">{cut.service.name}</td>
                                                 <td className="py-3 px-4 text-sm font-semibold text-right text-white">
-                                                    ${parseFloat(cut.final_price).toFixed(2)}
+                                                    {formatCurrency(cut.final_price)}
                                                 </td>
                                             </tr>
                                         ))}

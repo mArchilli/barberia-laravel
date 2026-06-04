@@ -1,6 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import RegisterCutModal from '@/Components/RegisterCutModal';
+import { formatCurrency } from '@/utils/currency';
 import { useState } from 'react';
 
 export default function BarberDashboard({ auth, stats, services, paymentMethods }) {
@@ -43,7 +44,7 @@ export default function BarberDashboard({ auth, stats, services, paymentMethods 
                                 Cortes realizados
                             </div>
                             <div className="text-2xl font-semibold text-white">
-                                ${parseFloat(stats.earnings_today).toFixed(2)}
+                                {formatCurrency(stats.earnings_today)}
                             </div>
                             <div className="text-white/50 text-sm">
                                 Ganancia del día
@@ -63,7 +64,7 @@ export default function BarberDashboard({ auth, stats, services, paymentMethods 
                                 Cortes realizados
                             </div>
                             <div className="text-2xl font-semibold text-white">
-                                ${parseFloat(stats.earnings_this_month).toFixed(2)}
+                                {formatCurrency(stats.earnings_this_month)}
                             </div>
                             <div className="text-white/50 text-sm">
                                 Ganancia mensual
@@ -83,7 +84,7 @@ export default function BarberDashboard({ auth, stats, services, paymentMethods 
                                 Cortes realizados
                             </div>
                             <div className="text-2xl font-semibold text-white">
-                                ${parseFloat(stats.total_earnings).toFixed(2)}
+                                {formatCurrency(stats.total_earnings)}
                             </div>
                             <div className="text-white/50 text-sm">
                                 Ganancia total

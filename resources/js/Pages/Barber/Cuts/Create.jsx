@@ -1,5 +1,6 @@
 import { Head, Link, useForm } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { formatCurrency } from '@/utils/currency';
 import { useState } from 'react';
 
 export default function Create({ auth, services, barbershop }) {
@@ -90,7 +91,7 @@ export default function Create({ auth, services, barbershop }) {
                                     >
                                         <div className="text-white font-semibold">{service.name}</div>
                                         <div className="text-white/70 text-sm mt-1">
-                                            {service.duration} min • ${service.price}
+                                            {service.duration} min • {formatCurrency(service.price)}
                                         </div>
                                     </button>
                                 ))}

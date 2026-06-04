@@ -1,6 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, usePage } from '@inertiajs/react';
 import RegisterCutModal from '@/Components/RegisterCutModal';
+import { formatCurrency } from '@/utils/currency';
 import { useState, useEffect } from 'react';
 
 export default function Dashboard({ auth, services, paymentMethods, cutsToday, revenueToday, recentCuts }) {
@@ -104,7 +105,7 @@ export default function Dashboard({ auth, services, paymentMethods, cutsToday, r
 
                         <div className="mb-6 flex items-center gap-3">
                             <h2 className="text-5xl font-bold text-white">
-                                {showBalance ? `$${parseFloat(revenueToday || 0).toFixed(2)}` : '$ ***'}
+                                {showBalance ? formatCurrency(revenueToday) : '$ ***'}
                             </h2>
                             <button
                                 onClick={() => setShowBalance(!showBalance)}

@@ -1,6 +1,7 @@
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import ConfirmModal from '@/Components/ConfirmModal';
+import { formatCurrency } from '@/utils/currency';
 import { useState } from 'react';
 
 export default function Index({ auth, services }) {
@@ -100,7 +101,7 @@ export default function Index({ auth, services }) {
                                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                         </svg>
-                                                        ${parseFloat(service.price).toFixed(2)}
+                                                        {formatCurrency(service.price)}
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4">
@@ -185,7 +186,7 @@ export default function Index({ auth, services }) {
                                                     </svg>
                                                     Precio
                                                 </div>
-                                                <span className="text-white font-semibold">${parseFloat(service.price).toFixed(2)}</span>
+                                                <span className="text-white font-semibold">{formatCurrency(service.price)}</span>
                                             </div>
                                         </div>
 
