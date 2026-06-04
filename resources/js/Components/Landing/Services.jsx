@@ -9,7 +9,7 @@ const services = [
         id: 1,
         name: 'Corte Clásico',
         description: 'El corte tradicional perfeccionado con técnicas modernas.',
-        price: '$25',
+        price: '$7.000',
         duration: '30 min',
         icon: '✂'
     },
@@ -17,7 +17,7 @@ const services = [
         id: 2,
         name: 'Afeitado Premium',
         description: 'Afeitado con navaja tradicional y toallas calientes.',
-        price: '$35',
+        price: '$9.000',
         duration: '45 min',
         icon: '🪒'
     },
@@ -25,7 +25,7 @@ const services = [
         id: 3,
         name: 'Barba & Bigote',
         description: 'Diseño, perfilado y mantenimiento de barba.',
-        price: '$20',
+        price: '$5.000',
         duration: '25 min',
         icon: '💈'
     },
@@ -33,7 +33,7 @@ const services = [
         id: 4,
         name: 'Corte + Barba',
         description: 'Servicio completo para un look impecable.',
-        price: '$40',
+        price: '$11.000',
         duration: '60 min',
         icon: '⭐'
     },
@@ -41,7 +41,7 @@ const services = [
         id: 5,
         name: 'Tratamiento Capilar',
         description: 'Hidratación y cuidado profesional del cabello.',
-        price: '$30',
+        price: '$8.000',
         duration: '40 min',
         icon: '🧴'
     },
@@ -49,7 +49,7 @@ const services = [
         id: 6,
         name: 'Diseño Artístico',
         description: 'Diseños personalizados y líneas definidas.',
-        price: '$15',
+        price: '$6.000',
         duration: '20 min',
         icon: '🎨'
     }
@@ -113,14 +113,17 @@ export default function Services() {
     }, []);
 
     return (
-        <section 
+        <section
             ref={sectionRef}
             className="relative py-32 bg-black text-white overflow-hidden"
         >
             <div className="container mx-auto px-6">
                 {/* Título */}
                 <div className="text-center mb-20">
-                    <h2 
+                    <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full border border-white/20 bg-white/5 text-xs font-semibold tracking-widest uppercase text-white/70">
+                        Lo que hacemos
+                    </span>
+                    <h2
                         ref={titleRef}
                         className="text-5xl md:text-7xl font-bold mb-6 tracking-tight"
                     >
@@ -138,10 +141,10 @@ export default function Services() {
                         <div
                             key={service.id}
                             ref={(el) => (cardsRef.current[index] = el)}
-                            className="group relative bg-white/5 backdrop-blur-sm border border-white/10 p-8 hover:bg-white/10 transition-all duration-500 cursor-pointer"
+                            className="group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 hover:bg-white/10 hover:border-white/20 transition-all duration-500 cursor-pointer overflow-hidden"
                         >
                             {/* Icono */}
-                            <div className="text-5xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <div className="w-16 h-16 mb-6 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center text-4xl group-hover:scale-110 group-hover:bg-white/20 transition-all duration-300">
                                 {service.icon}
                             </div>
 
@@ -149,7 +152,7 @@ export default function Services() {
                             <h3 className="text-2xl font-bold mb-3">
                                 {service.name}
                             </h3>
-                            
+
                             <p className="text-white/70 mb-6 leading-relaxed">
                                 {service.description}
                             </p>
@@ -160,23 +163,29 @@ export default function Services() {
                                     <div className="text-3xl font-bold">{service.price}</div>
                                     <div className="text-sm text-white/50">{service.duration}</div>
                                 </div>
-                                
-                                <button className="px-6 py-2 bg-white text-black font-semibold hover:bg-white/90 transition-all duration-300 group-hover:translate-x-1">
+
+                                <a
+                                    href="#contact"
+                                    className="px-6 py-2.5 bg-white text-black font-semibold rounded-full hover:bg-white/90 transition-all duration-300 group-hover:translate-x-1"
+                                >
                                     Reservar
-                                </button>
+                                </a>
                             </div>
 
                             {/* Elemento decorativo */}
-                            <div className="absolute top-0 right-0 w-20 h-20 bg-white/5 transform translate-x-10 -translate-y-10 rotate-45 group-hover:bg-white/10 transition-all duration-500" />
+                            <div className="absolute -top-10 -right-10 w-28 h-28 bg-white/5 rounded-full group-hover:bg-white/10 transition-all duration-500" />
                         </div>
                     ))}
                 </div>
 
                 {/* CTA adicional */}
                 <div className="text-center mt-16">
-                    <button className="px-10 py-4 border-2 border-white text-white font-semibold text-lg hover:bg-white hover:text-black transition-all duration-300">
+                    <a
+                        href="#contact"
+                        className="inline-block px-10 py-4 border-2 border-white/80 text-white font-semibold text-lg rounded-full hover:bg-white hover:text-black hover:border-white transition-all duration-300"
+                    >
                         Ver Todos los Servicios
-                    </button>
+                    </a>
                 </div>
             </div>
 

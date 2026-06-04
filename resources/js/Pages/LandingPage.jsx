@@ -64,15 +64,15 @@ export default function LandingPage() {
 
                         {/* Botones de acción - Desktop */}
                         <div className="hidden md:flex items-center space-x-4">
-                            <Link 
-                                href="/login" 
-                                className="px-6 py-2 border border-white text-white font-semibold hover:bg-white hover:text-black transition-all duration-300"
+                            <Link
+                                href="/login"
+                                className="px-6 py-2 border border-white/80 text-white font-semibold rounded-full hover:bg-white hover:text-black hover:border-white transition-all duration-300"
                             >
                                 Ingresar
                             </Link>
-                            <button className="px-6 py-2 bg-white text-black font-semibold hover:bg-white/90 transition-all duration-300">
+                            <a href="#contact" className="px-6 py-2 bg-white text-black font-semibold rounded-full hover:bg-white/90 transition-all duration-300">
                                 Reservar
-                            </button>
+                            </a>
                         </div>
 
                         {/* Menú hamburguesa - Mobile */}
@@ -96,7 +96,7 @@ export default function LandingPage() {
 
                 {/* Menú móvil desplegable */}
                 <div 
-                    className={`md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-md border-b border-white/10 transition-all duration-300 ${
+                    className={`md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-md border-b border-white/10 rounded-b-3xl transition-all duration-300 ${
                         mobileMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4'
                     }`}
                 >
@@ -139,18 +139,19 @@ export default function LandingPage() {
                         
                         {/* Botones de acción - Mobile */}
                         <div className="pt-4 space-y-3">
-                            <Link 
-                                href="/login" 
-                                className="block w-full px-6 py-3 border border-white text-white text-center font-semibold hover:bg-white hover:text-black transition-all duration-300"
+                            <Link
+                                href="/login"
+                                className="block w-full px-6 py-3 border border-white/80 text-white text-center font-semibold rounded-full hover:bg-white hover:text-black hover:border-white transition-all duration-300"
                             >
                                 Ingresar
                             </Link>
-                            <button 
+                            <a
+                                href="#contact"
                                 onClick={closeMobileMenu}
-                                className="w-full px-6 py-3 bg-white text-black font-semibold hover:bg-white/90 transition-all duration-300"
+                                className="block w-full px-6 py-3 bg-white text-black text-center font-semibold rounded-full hover:bg-white/90 transition-all duration-300"
                             >
                                 Reservar
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

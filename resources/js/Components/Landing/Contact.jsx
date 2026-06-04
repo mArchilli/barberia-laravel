@@ -61,15 +61,20 @@ export default function Contact() {
         alert('¡Gracias! Te contactaremos pronto.');
     };
 
+    const inputClasses = 'w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 rounded-xl focus:outline-none focus:border-white focus:ring-2 focus:ring-white/10 transition-all duration-300';
+
     return (
-        <section 
+        <section
             ref={sectionRef}
             className="relative py-32 bg-black text-white overflow-hidden"
         >
             <div className="container mx-auto px-6">
                 {/* Título */}
                 <div className="text-center mb-16">
-                    <h2 
+                    <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full border border-white/20 bg-white/5 text-xs font-semibold tracking-widest uppercase text-white/70">
+                        Reservas
+                    </span>
+                    <h2
                         ref={titleRef}
                         className="text-5xl md:text-7xl font-bold mb-6 tracking-tight"
                     >
@@ -83,7 +88,10 @@ export default function Contact() {
 
                 {/* Formulario */}
                 <div ref={formRef} className="max-w-4xl mx-auto">
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form
+                        onSubmit={handleSubmit}
+                        className="space-y-6 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 md:p-12 shadow-2xl"
+                    >
                         {/* Grid para campos del formulario */}
                         <div className="grid md:grid-cols-2 gap-6">
                             {/* Nombre */}
@@ -98,7 +106,7 @@ export default function Contact() {
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition-all duration-300"
+                                    className={inputClasses}
                                     placeholder="Juan Pérez"
                                 />
                             </div>
@@ -115,7 +123,7 @@ export default function Contact() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition-all duration-300"
+                                    className={inputClasses}
                                     placeholder="juan@ejemplo.com"
                                 />
                             </div>
@@ -132,7 +140,7 @@ export default function Contact() {
                                     value={formData.phone}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition-all duration-300"
+                                    className={inputClasses}
                                     placeholder="+1 (555) 123-4567"
                                 />
                             </div>
@@ -148,7 +156,7 @@ export default function Contact() {
                                     value={formData.service}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white focus:outline-none focus:border-white transition-all duration-300"
+                                    className={inputClasses}
                                 >
                                     <option value="" className="bg-black">Selecciona un servicio</option>
                                     <option value="corte-clasico" className="bg-black">Corte Clásico</option>
@@ -171,7 +179,7 @@ export default function Contact() {
                                     name="date"
                                     value={formData.date}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white focus:outline-none focus:border-white transition-all duration-300"
+                                    className={inputClasses}
                                 />
                             </div>
                         </div>
@@ -187,26 +195,26 @@ export default function Contact() {
                                 value={formData.message}
                                 onChange={handleChange}
                                 rows="5"
-                                className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition-all duration-300 resize-none"
+                                className={`${inputClasses} resize-none`}
                                 placeholder="¿Alguna preferencia o comentario adicional?"
                             />
                         </div>
 
                         {/* Botón de envío */}
-                        <div className="text-center pt-6">
+                        <div className="text-center pt-2">
                             <button
                                 type="submit"
-                                className="group relative px-12 py-4 bg-white text-black font-bold text-lg overflow-hidden transition-all duration-300 hover:scale-105"
+                                className="group relative px-12 py-4 bg-white text-black font-bold text-lg rounded-full overflow-hidden transition-all duration-300 hover:scale-105 shadow-lg shadow-white/10"
                             >
                                 <span className="relative z-10 group-hover:text-white transition-colors duration-300">
                                     Enviar Reserva
                                 </span>
-                                <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                                <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
                             </button>
                         </div>
 
                         {/* Nota */}
-                        <p className="text-center text-white/50 text-sm mt-6">
+                        <p className="text-center text-white/50 text-sm">
                             * Campos requeridos. Nos pondremos en contacto contigo para confirmar tu cita.
                         </p>
                     </form>
@@ -217,20 +225,17 @@ export default function Contact() {
                             <h3 className="text-2xl font-bold mb-4">Síguenos</h3>
                             <p className="text-white/60">Mantente al día con nuestras novedades y promociones</p>
                         </div>
-                        
-                        <div className="flex justify-center space-x-6">
-                            <a href="#" className="group w-12 h-12 border-2 border-white/30 flex items-center justify-center hover:bg-white hover:border-white transition-all duration-300">
-                                <span className="text-xl group-hover:text-black transition-colors duration-300">📘</span>
-                            </a>
-                            <a href="#" className="group w-12 h-12 border-2 border-white/30 flex items-center justify-center hover:bg-white hover:border-white transition-all duration-300">
-                                <span className="text-xl group-hover:text-black transition-colors duration-300">📷</span>
-                            </a>
-                            <a href="#" className="group w-12 h-12 border-2 border-white/30 flex items-center justify-center hover:bg-white hover:border-white transition-all duration-300">
-                                <span className="text-xl group-hover:text-black transition-colors duration-300">🐦</span>
-                            </a>
-                            <a href="#" className="group w-12 h-12 border-2 border-white/30 flex items-center justify-center hover:bg-white hover:border-white transition-all duration-300">
-                                <span className="text-xl group-hover:text-black transition-colors duration-300">💼</span>
-                            </a>
+
+                        <div className="flex justify-center gap-4">
+                            {['📘', '📷', '🐦', '💼'].map((emoji, i) => (
+                                <a
+                                    key={i}
+                                    href="#"
+                                    className="group w-14 h-14 rounded-2xl border-2 border-white/20 bg-white/5 flex items-center justify-center hover:bg-white hover:border-white hover:-translate-y-1 transition-all duration-300"
+                                >
+                                    <span className="text-xl group-hover:text-black transition-colors duration-300">{emoji}</span>
+                                </a>
+                            ))}
                         </div>
                     </div>
                 </div>

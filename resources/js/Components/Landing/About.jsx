@@ -53,7 +53,7 @@ export default function About() {
     }, []);
 
     return (
-        <section 
+        <section
             ref={sectionRef}
             className="relative py-32 bg-white text-black overflow-hidden"
         >
@@ -61,38 +61,42 @@ export default function About() {
                 <div className="grid md:grid-cols-2 gap-16 items-center">
                     {/* Contenido */}
                     <div>
-                        <h2 
+                        <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full border border-black/15 bg-black/5 text-xs font-semibold tracking-widest uppercase text-black/60">
+                            Sobre nosotros
+                        </span>
+
+                        <h2
                             ref={titleRef}
                             className="text-5xl md:text-7xl font-bold mb-8 tracking-tight"
                         >
                             Tradición
                             <span className="block text-black/70">& Estilo</span>
                         </h2>
-                        
+
                         <div ref={contentRef} className="space-y-6">
                             <p className="text-lg md:text-xl text-black/80 leading-relaxed">
-                                Desde hace más de una década, hemos perfeccionado el arte de la 
-                                barbería tradicional, combinándolo con las técnicas más modernas 
+                                Desde hace más de una década, hemos perfeccionado el arte de la
+                                barbería tradicional, combinándolo con las técnicas más modernas
                                 para ofrecerte una experiencia única.
                             </p>
-                            
+
                             <p className="text-lg md:text-xl text-black/80 leading-relaxed">
-                                Nuestro equipo de barberos profesionales está comprometido con la 
-                                excelencia, ofreciendo un servicio personalizado que realza tu 
+                                Nuestro equipo de barberos profesionales está comprometido con la
+                                excelencia, ofreciendo un servicio personalizado que realza tu
                                 estilo y personalidad.
                             </p>
 
-                            <div className="grid grid-cols-3 gap-8 pt-8 border-t border-black/20">
-                                <div>
-                                    <div className="text-4xl font-bold mb-2">10+</div>
+                            <div className="grid grid-cols-3 gap-4 pt-8">
+                                <div className="rounded-2xl bg-black/5 border border-black/10 p-5 text-center">
+                                    <div className="text-3xl md:text-4xl font-bold mb-2">10+</div>
                                     <div className="text-sm text-black/60">Años de experiencia</div>
                                 </div>
-                                <div>
-                                    <div className="text-4xl font-bold mb-2">5K+</div>
+                                <div className="rounded-2xl bg-black/5 border border-black/10 p-5 text-center">
+                                    <div className="text-3xl md:text-4xl font-bold mb-2">5K+</div>
                                     <div className="text-sm text-black/60">Clientes satisfechos</div>
                                 </div>
-                                <div>
-                                    <div className="text-4xl font-bold mb-2">100%</div>
+                                <div className="rounded-2xl bg-black/5 border border-black/10 p-5 text-center">
+                                    <div className="text-3xl md:text-4xl font-bold mb-2">100%</div>
                                     <div className="text-sm text-black/60">Dedicación</div>
                                 </div>
                             </div>
@@ -101,21 +105,22 @@ export default function About() {
 
                     {/* Imagen decorativa */}
                     <div ref={imageRef} className="relative">
-                        <div className="relative aspect-[3/4] bg-black overflow-hidden group">
+                        <div className="relative aspect-[3/4] rounded-3xl bg-black overflow-hidden group shadow-2xl">
                             {/* Placeholder para imagen */}
                             <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-800 to-black flex items-center justify-center">
                                 <div className="text-white/20 text-6xl">✂</div>
                             </div>
-                            
+
                             {/* Overlay con efecto hover */}
                             <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-all duration-500" />
-                            
+
                             {/* Marco decorativo */}
-                            <div className="absolute inset-4 border-2 border-white/30 pointer-events-none" />
+                            <div className="absolute inset-4 rounded-2xl border-2 border-white/30 pointer-events-none" />
                         </div>
 
                         {/* Elemento decorativo flotante */}
-                        <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-black transform rotate-45" />
+                        <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-black rounded-full -z-0" />
+                        <div className="absolute -top-6 -left-6 w-20 h-20 border-2 border-black/20 rounded-full -z-0" />
                     </div>
                 </div>
             </div>

@@ -4,6 +4,29 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const contactInfo = [
+    {
+        icon: '📍',
+        title: 'Dirección',
+        lines: ['Calle Principal 123', 'Centro, Ciudad', 'CP 12345']
+    },
+    {
+        icon: '🕐',
+        title: 'Horario',
+        lines: ['Lunes - Viernes: 9:00 AM - 8:00 PM', 'Sábado: 9:00 AM - 6:00 PM', 'Domingo: 10:00 AM - 4:00 PM']
+    },
+    {
+        icon: '📞',
+        title: 'Teléfono',
+        lines: ['+1 (555) 123-4567']
+    },
+    {
+        icon: '✉️',
+        title: 'Email',
+        lines: ['info@barbershop.com']
+    }
+];
+
 export default function Map() {
     const sectionRef = useRef(null);
     const titleRef = useRef(null);
@@ -53,7 +76,7 @@ export default function Map() {
     }, []);
 
     return (
-        <section 
+        <section
             ref={sectionRef}
             className="relative py-32 bg-white text-black overflow-hidden"
         >
@@ -61,72 +84,47 @@ export default function Map() {
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
                     {/* Información */}
                     <div ref={infoRef} className="order-2 lg:order-1">
-                        <h2 
+                        <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full border border-black/15 bg-black/5 text-xs font-semibold tracking-widest uppercase text-black/60">
+                            Ubicación
+                        </span>
+
+                        <h2
                             ref={titleRef}
-                            className="text-5xl md:text-7xl font-bold mb-8 tracking-tight"
+                            className="text-5xl md:text-7xl font-bold mb-10 tracking-tight"
                         >
                             Encuéntranos
                         </h2>
 
-                        <div className="space-y-8">
-                            {/* Dirección */}
-                            <div className="flex items-start space-x-4">
-                                <div className="text-3xl mt-1">📍</div>
-                                <div>
-                                    <h3 className="text-xl font-bold mb-2">Dirección</h3>
-                                    <p className="text-black/70 text-lg">
-                                        Calle Principal 123<br />
-                                        Centro, Ciudad<br />
-                                        CP 12345
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* Horario */}
-                            <div className="flex items-start space-x-4">
-                                <div className="text-3xl mt-1">🕐</div>
-                                <div>
-                                    <h3 className="text-xl font-bold mb-2">Horario</h3>
-                                    <div className="text-black/70 text-lg space-y-1">
-                                        <p>Lunes - Viernes: 9:00 AM - 8:00 PM</p>
-                                        <p>Sábado: 9:00 AM - 6:00 PM</p>
-                                        <p>Domingo: 10:00 AM - 4:00 PM</p>
+                        <div className="space-y-4">
+                            {contactInfo.map((item) => (
+                                <div
+                                    key={item.title}
+                                    className="flex items-start gap-4 rounded-2xl border border-black/10 bg-black/[0.03] p-5 hover:bg-black/[0.06] transition-colors duration-300"
+                                >
+                                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center text-2xl">
+                                        {item.icon}
+                                    </div>
+                                    <div>
+                                        <h3 className="text-lg font-bold mb-1">{item.title}</h3>
+                                        <div className="text-black/70 space-y-0.5">
+                                            {item.lines.map((line, i) => (
+                                                <p key={i}>{line}</p>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            {/* Teléfono */}
-                            <div className="flex items-start space-x-4">
-                                <div className="text-3xl mt-1">📞</div>
-                                <div>
-                                    <h3 className="text-xl font-bold mb-2">Teléfono</h3>
-                                    <p className="text-black/70 text-lg">
-                                        +1 (555) 123-4567
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* Email */}
-                            <div className="flex items-start space-x-4">
-                                <div className="text-3xl mt-1">✉️</div>
-                                <div>
-                                    <h3 className="text-xl font-bold mb-2">Email</h3>
-                                    <p className="text-black/70 text-lg">
-                                        info@barbershop.com
-                                    </p>
-                                </div>
-                            </div>
+                            ))}
 
                             {/* Botón de dirección */}
-                            <button className="mt-8 px-8 py-4 bg-black text-white font-semibold hover:bg-black/80 transition-all duration-300">
+                            <button className="mt-4 px-8 py-4 bg-black text-white font-semibold rounded-full hover:bg-black/80 transition-all duration-300">
                                 Cómo Llegar
                             </button>
                         </div>
                     </div>
 
                     {/* Mapa */}
-                    <div ref={mapRef} className="order-1 lg:order-2">
-                        <div className="relative aspect-square bg-black/5 border-2 border-black/10 overflow-hidden">
+                    <div ref={mapRef} className="order-1 lg:order-2 relative">
+                        <div className="relative aspect-square rounded-3xl bg-black/5 border-2 border-black/10 overflow-hidden shadow-xl">
                             {/* Placeholder del mapa - Aquí puedes integrar Google Maps o similar */}
                             <div className="absolute inset-0 flex items-center justify-center">
                                 <div className="text-center">
@@ -146,11 +144,12 @@ export default function Map() {
                             </div>
 
                             {/* Marco decorativo */}
-                            <div className="absolute inset-4 border-2 border-black/10 pointer-events-none" />
+                            <div className="absolute inset-4 rounded-2xl border-2 border-black/10 pointer-events-none" />
                         </div>
 
                         {/* Elementos decorativos */}
-                        <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-black transform rotate-45 -z-10" />
+                        <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-black rounded-full -z-10" />
+                        <div className="absolute -top-6 -left-6 w-16 h-16 border-2 border-black/20 rounded-full -z-10" />
                     </div>
                 </div>
             </div>
