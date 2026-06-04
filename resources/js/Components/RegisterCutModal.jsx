@@ -60,7 +60,7 @@ export default function RegisterCutModal({ show, onClose, services, paymentMetho
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6 bg-black/75 backdrop-blur-sm">
-            <div className="relative w-full max-w-2xl max-h-[90vh] border border-white/20 bg-black/95 backdrop-blur-lg overflow-y-auto">
+            <div className="relative w-full max-w-2xl max-h-[90vh] border border-white/20 bg-black/95 backdrop-blur-lg overflow-y-auto rounded-2xl">
                 <div className="p-8">
                 {/* Header */}
                 <div className="mb-6 flex items-center justify-between">
@@ -88,7 +88,7 @@ export default function RegisterCutModal({ show, onClose, services, paymentMetho
                                     key={service.id}
                                     type="button"
                                     onClick={() => handleServiceSelect(service)}
-                                    className={`p-4 border-2 transition text-left ${
+                                    className={`p-4 border-2 transition text-left rounded-xl ${
                                         selectedService?.id === service.id
                                             ? 'border-white bg-white/10'
                                             : 'border-white/20 bg-white/5 hover:border-white/40'
@@ -117,7 +117,7 @@ export default function RegisterCutModal({ show, onClose, services, paymentMetho
                                     key={method.id}
                                     type="button"
                                     onClick={() => setData('payment_method_id', method.id)}
-                                    className={`p-4 border-2 transition text-left ${
+                                    className={`p-4 border-2 transition text-left rounded-xl ${
                                         data.payment_method_id === method.id
                                             ? 'border-white bg-white/10'
                                             : 'border-white/20 bg-white/5 hover:border-white/40'
@@ -142,7 +142,7 @@ export default function RegisterCutModal({ show, onClose, services, paymentMetho
                             type="text"
                             value={data.client_name}
                             onChange={(e) => setData('client_name', e.target.value)}
-                            className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                            className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition rounded-lg"
                             placeholder="Ej: Juan Pérez"
                         />
                         {errors.client_name && (
@@ -160,7 +160,7 @@ export default function RegisterCutModal({ show, onClose, services, paymentMetho
                             type="datetime-local"
                             value={data.service_date}
                             readOnly
-                            className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white/70 cursor-not-allowed"
+                            className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white/70 cursor-not-allowed rounded-lg"
                         />
                         <p className="text-white/50 text-sm mt-1">
                             Hora actual de Argentina - No modificable
@@ -181,7 +181,7 @@ export default function RegisterCutModal({ show, onClose, services, paymentMetho
                                 min="0"
                                 value={data.final_price}
                                 readOnly
-                                className="w-full pl-8 pr-4 py-3 bg-white/5 border border-white/10 text-white/70 placeholder-white/40 cursor-not-allowed"
+                                className="w-full pl-8 pr-4 py-3 bg-white/5 border border-white/10 text-white/70 placeholder-white/40 cursor-not-allowed rounded-lg"
                                 placeholder="Selecciona un servicio"
                             />
                         </div>
@@ -195,14 +195,14 @@ export default function RegisterCutModal({ show, onClose, services, paymentMetho
                         <button
                             type="button"
                             onClick={handleClose}
-                            className="flex-1 py-3 bg-white/10 text-white text-center font-semibold border border-white/20 hover:bg-white/20 transition"
+                            className="flex-1 py-3 bg-white/10 text-white text-center font-semibold border border-white/20 hover:bg-white/20 transition rounded-lg"
                         >
                             Cancelar
                         </button>
                         <button
                             type="submit"
                             disabled={processing}
-                            className="flex-1 py-3 bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex-1 py-3 bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
                         >
                             {processing ? 'Registrando...' : 'Registrar Corte'}
                         </button>

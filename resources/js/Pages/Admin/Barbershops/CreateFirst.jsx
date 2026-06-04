@@ -104,7 +104,7 @@ export default function CreateFirst() {
                     />
 
                     {/* Formulario */}
-                    <form onSubmit={handleSubmit} className="border border-white/10 bg-white/5 backdrop-blur-sm p-8">
+                    <form onSubmit={handleSubmit} className="border border-white/10 bg-white/5 backdrop-blur-sm p-8 rounded-2xl">
                         
                         {/* PASO 1: Información Básica */}
                         {currentStep === 1 && (
@@ -122,10 +122,10 @@ export default function CreateFirst() {
                                             <img 
                                                 src={logoPreview} 
                                                 alt="Preview" 
-                                                className="w-32 h-32 object-cover border-2 border-white/20"
+                                                className="w-32 h-32 object-cover border-2 border-white/20 rounded-2xl"
                                             />
                                         ) : (
-                                            <div className="w-32 h-32 border-2 border-white/20 border-dashed flex items-center justify-center text-white/40">
+                                            <div className="w-32 h-32 border-2 border-white/20 border-dashed flex items-center justify-center text-white/40 rounded-2xl">
                                                 Sin logo
                                             </div>
                                         )}
@@ -140,7 +140,7 @@ export default function CreateFirst() {
                                     />
                                     <label
                                         htmlFor="logo-upload"
-                                        className="inline-block px-6 py-2 bg-white/10 text-white border border-white/20 cursor-pointer hover:bg-white/20 transition"
+                                        className="inline-block px-6 py-2 bg-white/10 text-white border border-white/20 cursor-pointer hover:bg-white/20 transition rounded-lg"
                                     >
                                         Seleccionar Logo
                                     </label>
@@ -158,7 +158,7 @@ export default function CreateFirst() {
                                         type="text"
                                         value={data.name}
                                         onChange={(e) => setData('name', e.target.value)}
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition rounded-lg"
                                         placeholder="Ej: Barbería Premium"
                                     />
                                     {errors.name && (
@@ -181,7 +181,7 @@ export default function CreateFirst() {
                                     <textarea
                                         value={data.address}
                                         onChange={(e) => setData('address', e.target.value)}
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition resize-none"
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition resize-none rounded-lg"
                                         placeholder="Ej: Calle Principal 123, Entre Av. A y Av. B"
                                         rows="3"
                                     />
@@ -199,7 +199,7 @@ export default function CreateFirst() {
                                         type="tel"
                                         value={data.phone}
                                         onChange={(e) => setData('phone', e.target.value)}
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition rounded-lg"
                                         placeholder="Ej: +1 (555) 123-4567"
                                     />
                                     {errors.phone && (
@@ -220,7 +220,7 @@ export default function CreateFirst() {
 
                                 <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
                                     {daysOfWeek.map(({ key, label }) => (
-                                        <div key={key} className="border border-white/10 bg-white/5 p-4">
+                                        <div key={key} className="border border-white/10 bg-white/5 p-4 rounded-xl">
                                             <div className="flex items-center justify-between mb-3">
                                                 <label className="text-white font-semibold flex-1">
                                                     {label}
@@ -228,7 +228,7 @@ export default function CreateFirst() {
                                                 <button
                                                     type="button"
                                                     onClick={() => addTimeSlot(key)}
-                                                    className="px-4 py-1 bg-white/10 text-white text-sm border border-white/20 hover:bg-white/20 transition"
+                                                    className="px-4 py-1 bg-white/10 text-white text-sm border border-white/20 hover:bg-white/20 transition rounded-lg"
                                                 >
                                                     + Agregar Horario
                                                 </button>
@@ -241,19 +241,19 @@ export default function CreateFirst() {
                                                         type="time"
                                                         value={slot.start}
                                                         onChange={(e) => updateTimeSlot(key, index, 'start', e.target.value)}
-                                                        className="flex-1 px-3 py-2 bg-white/5 border border-white/20 text-white text-sm focus:outline-none focus:border-white transition"
+                                                        className="flex-1 px-3 py-2 bg-white/5 border border-white/20 text-white text-sm focus:outline-none focus:border-white transition rounded-lg"
                                                     />
                                                     <span className="text-white/50">hasta</span>
                                                     <input
                                                         type="time"
                                                         value={slot.end}
                                                         onChange={(e) => updateTimeSlot(key, index, 'end', e.target.value)}
-                                                        className="flex-1 px-3 py-2 bg-white/5 border border-white/20 text-white text-sm focus:outline-none focus:border-white transition"
+                                                        className="flex-1 px-3 py-2 bg-white/5 border border-white/20 text-white text-sm focus:outline-none focus:border-white transition rounded-lg"
                                                     />
                                                     <button
                                                         type="button"
                                                         onClick={() => removeTimeSlot(key, index)}
-                                                        className="px-3 py-2 bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30 transition text-sm"
+                                                        className="px-3 py-2 bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30 transition text-sm rounded-lg"
                                                     >
                                                         ✕
                                                     </button>
@@ -279,7 +279,7 @@ export default function CreateFirst() {
                                 <button
                                     type="button"
                                     onClick={prevStep}
-                                    className="flex-1 py-3 bg-white/10 text-white font-semibold border border-white/20 hover:bg-white/20 transition"
+                                    className="flex-1 py-3 bg-white/10 text-white font-semibold border border-white/20 hover:bg-white/20 transition rounded-lg"
                                 >
                                     ← Anterior
                                 </button>
@@ -289,7 +289,7 @@ export default function CreateFirst() {
                                 <button
                                     type="button"
                                     onClick={nextStep}
-                                    className="flex-1 py-3 bg-white text-black font-bold hover:bg-white/90 transition"
+                                    className="flex-1 py-3 bg-white text-black font-bold hover:bg-white/90 transition rounded-lg"
                                 >
                                     Siguiente →
                                 </button>
@@ -297,7 +297,7 @@ export default function CreateFirst() {
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="flex-1 py-3 bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="flex-1 py-3 bg-white text-black font-bold hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
                                 >
                                     {processing ? 'Creando...' : 'Crear Mi Barbería ✓'}
                                 </button>

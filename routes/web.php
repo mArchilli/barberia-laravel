@@ -204,6 +204,12 @@ Route::middleware(['auth', 'verified', 'role:barber'])->prefix('barber')->name('
         Route::post('/update-profile', [\App\Http\Controllers\Barber\SettingsController::class, 'updateProfile'])->name('update-profile');
         Route::post('/send-password-reset', [\App\Http\Controllers\Barber\SettingsController::class, 'sendPasswordReset'])->name('send-password-reset');
     });
+
+    // Rutas de personalización
+    Route::prefix('customization')->name('customization.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Barber\CustomizationController::class, 'index'])->name('index');
+        Route::post('/update', [\App\Http\Controllers\Barber\CustomizationController::class, 'update'])->name('update');
+    });
 });
 
 // Rutas de perfil (accesibles para todos los usuarios autenticados)

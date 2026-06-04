@@ -153,10 +153,10 @@ export default function Index({ auth, schedulesByDay }) {
                                         <img 
                                             src={logoPreview} 
                                             alt="Logo" 
-                                            className="w-32 h-32 object-cover border-2 border-white/20"
+                                            className="w-32 h-32 object-cover border-2 border-white/20 rounded-2xl"
                                         />
                                     ) : (
-                                        <div className="w-32 h-32 border-2 border-white/20 border-dashed flex items-center justify-center text-white/40">
+                                        <div className="w-32 h-32 border-2 border-white/20 border-dashed flex items-center justify-center text-white/40 rounded-2xl">
                                             Sin logo
                                         </div>
                                     )}

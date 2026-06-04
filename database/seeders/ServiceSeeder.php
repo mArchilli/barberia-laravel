@@ -14,7 +14,7 @@ class ServiceSeeder extends Seeder
      */
     public function run(): void
     {
-        // Obtener la primera barbería (debes tener al menos una creada)
+        // Obtener la primera barbería (creada en DatabaseSeeder)
         $barbershop = Barbershop::first();
 
         if (!$barbershop) {
@@ -24,30 +24,27 @@ class ServiceSeeder extends Seeder
 
         $services = [
             [
-                'barbershop_id' => $barbershop->id,
-                'name' => 'Corte Clásico',
+                'name' => 'Corte con máquina',
                 'duration' => 30,
-                'price' => 25.00,
+                'price' => 7000.00,
                 'is_active' => true,
             ],
             [
-                'barbershop_id' => $barbershop->id,
-                'name' => 'Claritos',
-                'duration' => 45,
-                'price' => 35.00,
-                'is_active' => true,
-            ],
-            [
-                'barbershop_id' => $barbershop->id,
-                'name' => 'Corte + Barba',
+                'name' => 'Corte y barba',
                 'duration' => 60,
-                'price' => 40.00,
+                'price' => 11000.00,
                 'is_active' => true,
             ],
         ];
 
         foreach ($services as $service) {
-            Service::create($service);
+            Service::firstOrCreate(
+                [
+                    'barbershop_id' => $barbershop->id,
+                    'name' => $service['name'],
+                ],
+                $service
+            );
         }
 
         $this->command->info('Servicios precargados exitosamente.');

@@ -14,7 +14,7 @@ export default function ConfirmModal({ show, onClose, onConfirm, title, message,
             />
 
             {/* Modal */}
-            <div className="relative w-full max-w-md border border-white/10 bg-black p-8 shadow-xl">
+            <div className="relative w-full max-w-md border border-white/10 bg-black p-8 shadow-xl rounded-2xl">
                 <h3 className="text-2xl font-bold text-white mb-4">
                     {title}
                 </h3>
@@ -26,14 +26,14 @@ export default function ConfirmModal({ show, onClose, onConfirm, title, message,
                     <button
                         type="button"
                         onClick={onClose}
-                        className="flex-1 py-3 bg-white/10 text-white font-semibold border border-white/20 hover:bg-white/20 transition"
+                        className="flex-1 py-3 bg-white/10 text-white font-semibold border border-white/20 hover:bg-white/20 transition rounded-lg"
                     >
                         {cancelText}
                     </button>
                     <button
                         type="button"
                         onClick={onConfirm}
-                        className={`flex-1 py-3 font-bold border transition ${confirmButtonClass}`}
+                        className={`flex-1 py-3 font-bold border transition rounded-lg ${confirmButtonClass}`}
                     >
                         {confirmText}
                     </button>

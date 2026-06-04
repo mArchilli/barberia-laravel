@@ -45,13 +45,13 @@ export default function Login({ status, canResetPassword }) {
 
                 {/* Mensaje de estado */}
                 {status && (
-                    <div className="mb-6 p-4 bg-green-500/20 border border-green-500/30 text-green-400 text-sm">
+                    <div className="mb-6 p-4 bg-green-500/20 border border-green-500/30 text-green-400 text-sm rounded-xl">
                         {status}
                     </div>
                 )}
 
                 {/* Formulario */}
-                <form onSubmit={submit} className="border border-white/10 bg-white/5 backdrop-blur-sm p-8">
+                <form onSubmit={submit} className="border border-white/10 bg-white/5 backdrop-blur-sm p-8 rounded-2xl">
                     {/* Email */}
                     <div className="mb-6">
                         <label htmlFor="email" className="block text-white font-semibold mb-2">
@@ -65,7 +65,7 @@ export default function Login({ status, canResetPassword }) {
                             autoComplete="username"
                             autoFocus
                             onChange={(e) => setData('email', e.target.value)}
-                            className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                            className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition rounded-lg"
                             placeholder="tu@email.com"
                         />
                         {errors.email && (
@@ -85,7 +85,7 @@ export default function Login({ status, canResetPassword }) {
                             value={data.password}
                             autoComplete="current-password"
                             onChange={(e) => setData('password', e.target.value)}
-                            className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition"
+                            className="w-full px-4 py-3 bg-white/5 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white transition rounded-lg"
                             placeholder="••••••••"
                         />
                         {errors.password && (
@@ -101,7 +101,7 @@ export default function Login({ status, canResetPassword }) {
                                 name="remember"
                                 checked={data.remember}
                                 onChange={(e) => setData('remember', e.target.checked)}
-                                className="w-4 h-4 bg-white/5 border-white/20 text-white focus:ring-white/50"
+                                className="w-4 h-4 bg-white/5 border-white/20 text-white focus:ring-white/50 rounded"
                             />
                             <span className="ml-2 text-sm text-white/70">
                                 Recordarme
@@ -114,7 +114,7 @@ export default function Login({ status, canResetPassword }) {
                         <button
                             type="submit"
                             disabled={processing}
-                            className="w-full py-3 bg-white text-black font-bold text-lg hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full py-3 bg-white text-black font-bold text-lg hover:bg-white/90 transition disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
                         >
                             {processing ? 'Iniciando sesión...' : 'Iniciar Sesión'}
                         </button>
